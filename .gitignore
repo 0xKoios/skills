@@ -5,6 +5,7 @@ comment.json
 desc.html
 .DS_Store
 
-# Isolated worktrees
+# Isolated worktrees / local design docs (not published)
 .worktrees/
 .superpowers/
+docs/superpowers/
