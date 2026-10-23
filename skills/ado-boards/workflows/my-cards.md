@@ -1,31 +1,44 @@
 # Workflow: My cards
 
-Goal: day-to-day work on the user's own cards: see them, move them, log time, close them. How: `../mcp-tools.md` (MCP) or `../az/my-cards.md` (az).
+Goal: day-to-day work on the user's own cards — view, move, log time, close. How: `../mcp-tools.md` (MCP) or `../az/my-cards.md` (az).
 
 ## View my cards
-Get cards assigned to me that are not Closed or Removed. Group by state, one line each: ID, type, title, sprint, Remaining Work with unit (tasks only). Mark cards in the current sprint, cards from another system (prefix in config), and cards missing a description or acceptance criteria, so the user sees at a glance what needs attention.
 
-For "what did I touch today / this week", get cards changed by me in that range.
+Load cards assigned to me that are not Closed or Removed. Group by state; one line each: ID, type, title, sprint, Remaining Work with unit (tasks only). Flag: current sprint, external prefix (config), missing description or AC.
+
+"What did I touch today / this week" → cards I changed in that range.
+
+Done when the list is shown; no preview (read-only).
 
 ## Move a card
-1. Read the card: type, current state, Remaining Work.
-2. Check the target state is valid for the type (SKILL.md section 4, plus custom states in config). If the state is unknown and custom states are `not set yet`, collect them first (setup, "On first need").
-3. Card from another system: give the warning first.
-4. One-line preview, wait for "yes", update, read back.
+
+1. Read the card: type, state, Remaining Work.
+2. Confirm the target state for the type (`../SKILL.md` §4 + custom states in config). Unknown state and custom states `not set yet` → collect first (setup, on first need).
+3. External card → warn first.
+4. One-line **preview**, wait for "yes", update, **read-back**.
+
+Done when read-back shows the new state.
 
 ## Log time on a task
-User says e.g. "spent 0.5 day on #512", "spent 3h on #512" or "1 day left on #512".
-1. Read current Completed Work and Remaining Work. An empty field counts as 0.
-2. If the user's unit differs from the config's, convert with hours per day.
-3. New values: Completed + spent; Remaining − spent, never below 0. If the user gives Remaining directly, use it.
-4. Preview in the team unit, with the user's unit alongside when converted: `#512: Completed 1 -> 1.375 d, Remaining 2 -> 1.625 d (3h at 8h/day). OK?`
-5. Update both fields, read back.
 
-Only Tasks carry time in Agile. If the user logs time on a story, offer to log it on one of its tasks.
+Examples: "spent 0.5 day on #512", "spent 3h on #512", "1 day left on #512".
+
+1. Read Completed Work and Remaining Work (empty = 0).
+2. Convert if the user's unit differs from config (hours per day).
+3. New totals: Completed + spent; Remaining − spent (floor 0). Direct Remaining from the user wins.
+4. Preview in team unit; show the user's unit alongside when converted: `#512: Completed 1 -> 1.375 d, Remaining 2 -> 1.625 d (3h at 8h/day). OK?`
+5. Update both fields, read-back.
+
+Only Tasks carry time in Agile. Time on a story → offer to log on one of its tasks.
+
+Done when read-back shows both totals.
 
 ## Close a card
-1. As "Move a card", to Closed (or Resolved for stories, if the team uses it).
-2. Task with Remaining Work above 0: ask whether to set it to 0, so the sprint burndown is right.
-3. If the config asks for Impact notes and the card is not from another system: ask "One line on impact? (skip is fine)". Example: "Orders load now runs in 15 min instead of 2 h". Write only what the user gave; work history later quotes these lines as facts.
-4. Preview the state change and the Impact comment together, wait for "yes".
-5. Update the state, then add the comment as `Impact: <text>`. Read back.
+
+1. Move to Closed (or Resolved for stories, if the team uses it) — same preview gate as Move.
+2. Task with Remaining Work > 0 → ask whether to set Remaining to 0 (burndown).
+3. If config asks for Impact and the card is not external: "One line on impact? (skip is fine)". Write only what the user gave.
+4. Preview state change and Impact comment together; wait for "yes".
+5. Update state; add comment as `Impact: <text>`; read-back.
+
+Done when read-back shows Closed/Resolved and any Impact comment.

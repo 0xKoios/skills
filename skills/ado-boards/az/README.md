@@ -1,14 +1,14 @@
 # az backend
 
-Use these files when Azure DevOps MCP tools are **not** available. When MCP is available, use `../mcp-tools.md` instead; come back here only for what MCP cannot do (e.g. removing a comment — see `comments.md`).
+Use when Azure DevOps MCP tools are unavailable. With MCP, prefer `../mcp-tools.md`; open one file here only for documented gaps (e.g. remove comment → `comments.md`).
 
-Assumes setup has run, so org and project are defaults (`az devops configure --defaults organization=https://dev.azure.com/<org> project="<project>"`). Values in `<angle brackets>` come from config or the user.
+Assumes setup ran: org and project are defaults (`az devops configure --defaults organization=https://dev.azure.com/<org> project="<project>"`). `<angle brackets>` come from config or the user.
 
-Commands are written on one line so they work in PowerShell and bash. Use `-o json` to parse; show results to the user as a short list or table.
+One-line commands for PowerShell and bash. Parse with `-o json`; show the user a short list or table.
 
-**Load only this README plus the one section file for the current workflow.** Do not load other az sections or `../mcp-tools.md` in the same turn unless a documented MCP gap requires that one az file.
+**Load this README plus the one section file for the current workflow.** Load another az file or `../mcp-tools.md` in the same turn only for a documented MCP gap. Load `windows.md` only when an HTML description/AC write comes back mangled, or PowerShell quoting fails.
 
-Not yet tested against a live org: if a command fails, show the error, do not guess a variant, and tell the user it needs fixing in the matching section file below.
+Live-org status: not yet verified. On failure: show the error, leave the command as written, and say it needs a fix in that section file.
 
 ## Section files
 
@@ -20,9 +20,9 @@ Not yet tested against a live org: if a command fails, show the error, do not gu
 | Comments | `comments.md` |
 | Plan my sprint | `plan-my-sprint.md` |
 | Description and acceptance criteria | `write-description.md` |
-| Windows / PowerShell / HTML `@file` | `windows.md` (load only when writing HTML or hitting PowerShell quoting issues) |
+| Windows / PowerShell / HTML `@file` | `windows.md` |
 
-## Never
+## Guardrails
 
-- `az boards work-item delete`: this skill never deletes cards.
-- Printing or passing a PAT. Auth comes from `az login` or `AZURE_DEVOPS_EXT_PAT`.
+- Cards stay on the board — this skill never runs `az boards work-item delete`.
+- Auth via `az login` or `AZURE_DEVOPS_EXT_PAT`; PATs stay out of chat.

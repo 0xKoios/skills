@@ -1,28 +1,40 @@
 # Workflow: Comments
 
-Goal: add, list, edit and remove comments on a card. Edit and remove apply to the user's own comments only. How: `../mcp-tools.md` (MCP) or `../az/comments.md` (az).
+Goal: add, list, edit, and remove comments. Edit and remove: user's own only. How: `../mcp-tools.md` (MCP) or `../az/comments.md` (az).
 
-- **MCP:** add, list and edit have tools. Remove has no MCP tool: use the az command if `az` is logged in; otherwise give the user the card URL to remove it in the web UI.
-- **az:** add uses `--discussion`; list, edit and remove use the Comments REST API through `az devops invoke` (a preview API).
+- **MCP:** add, list, edit. Remove has no MCP tool → `../az/comments.md` if az is logged in; otherwise give the card URL for the web UI.
+- **az:** add via `--discussion`; list/edit/remove via Comments REST (`az devops invoke`, preview API).
 
-If a call fails, show the error and stop rather than trying other endpoints: a guessed endpoint can act on the wrong comment.
+On failure: show the error and stop (guessed endpoints can hit the wrong comment).
 
 ## Add
-1. Card from another system: give the warning first.
-2. Show the exact text: `Post to #512: "Waiting on review. PR #88" OK?`. Fix spelling only if asked; never change the meaning.
+
+1. External card → warn first.
+2. Preview exact text: `Post to #512: "Waiting on review. PR #88" OK?` Spelling fixes only if asked; keep meaning.
 3. After "yes", post and confirm.
 
+Done when the new comment appears in a list or read-back.
+
 ## List
-Show each comment on one line: comment ID, author, date, first 80 characters. Mark the user's own comments (author email equals "Me" in config).
+
+One line per comment: comment ID, author, date, first 80 characters. Mark own comments (author email = Me in config).
+
+Done when the list is shown.
 
 ## Edit
-1. List the comments and identify the one meant ("my comment from yesterday"). If more than one matches, ask.
-2. Check the author is me. If not, say only the author can edit it.
-3. Preview old and new text in full, wait for "yes".
-4. Update, then list again to confirm.
+
+1. List comments; pick the one meant ("my comment from yesterday"). Ambiguous → ask.
+2. Author must be me; otherwise say only the author can edit.
+3. Preview old and new text in full; wait for "yes".
+4. Update; list again to confirm.
+
+Done when the list shows the new text.
 
 ## Remove
-1. Identify the comment as in Edit, and check the author is me.
-2. Show the full comment (ID, date, full text) and ask: `Remove this comment from #512? This cannot be undone. Type yes to confirm.`
-3. Only an explicit "yes" removes it. Anything else: do nothing.
-4. Remove, then list again to confirm it is gone.
+
+1. Identify as in Edit; author must be me.
+2. Show full comment (ID, date, full text): `Remove this comment from #512? This cannot be undone. Type yes to confirm.`
+3. Explicit "yes" only; anything else → leave it.
+4. Remove; list again to confirm it is gone.
+
+Done when the comment is absent from the list.

@@ -1,38 +1,35 @@
 # skills
 
-Agent skills I use for real work — starting with Azure Boards, growing as I need them.
+Skills I use for real work. This repo is a **collection**: each folder under `skills/` is one skill; install one at a time.
 
-Small, editable, installable one at a time. Works with Cursor, Claude Code, Copilot, Codex, Gemini CLI, and anything else that speaks [Agent Skills](https://agentskills.io/specification).
+Works with Cursor, Claude Code, Copilot, Codex, Gemini CLI, and other [Agent Skills](https://agentskills.io/specification) hosts.
 
 ## Install
 
-Needs [Node.js](https://nodejs.org/) 22.20+. Global install so every project sees the skill:
+Needs [Node.js](https://nodejs.org/) 22.20+.
 
 ```bash
-npx skills add 0xKoios/skills --skill ado-boards -g
+npx skills add 0xKoios/skills -s ado-boards -g
 ```
 
-Pick agents with `-a` (e.g. `-a cursor -a claude-code`), or `-a '*'` / `--all`. List what’s in the repo: `npx skills add 0xKoios/skills -l`. Update with `npx skills update`. On Windows without symlink support, add `--copy`.
+Done when the agent lists `ado-boards`. `-g` makes it available in every project. Target agents with `-a` (e.g. `-a cursor`, or `-a '*'` / `--all`). Inventory: `npx skills add 0xKoios/skills -l`. Refresh: `npx skills update`. On Windows without symlinks, add `--copy`. Further flags: `npx skills --help`.
 
 ## Skills
 
-| Skill | What it does |
+| Skill | Reach for it when |
 |---|---|
-| [`ado-boards`](skills/ado-boards/) | Your own Azure DevOps Boards cards via MCP or `az`: view, create with parent, move, log time, comments, descriptions/AC, plan my sprint |
+| [`ado-boards`](skills/ado-boards/) | Your Azure Boards cards — view, create under a parent, move, log time, comments, description/AC, plan my sprint. Reads free; every write previews first. |
 
-Reading never asks permission. Every write shows a preview and waits for your "yes".
+## Edit a skill
 
-## Edit / contribute
-
-Installs are managed copies — don’t edit them. To change a skill, clone and link:
+**Link** a clone into the agent's skills folder so edits land in this repo:
 
 ```bash
 git clone https://github.com/0xKoios/skills ~/code/skills
 ln -s ~/code/skills/skills/ado-boards ~/.claude/skills/ado-boards
-# Cursor: ~/.cursor/skills/ado-boards — Copilot: ~/.copilot/skills/ado-boards
 ```
 
-Remove any prior `npx skills` install of the same name first so the agent does not load two.
+Other agents use the same idea with their skills path (`~/.cursor/skills/ado-boards`, `~/.copilot/skills/ado-boards`). Done when the agent loads this clone as its only copy of that skill — clear any prior `npx skills` install of the same name, then link.
 
 ## License
 

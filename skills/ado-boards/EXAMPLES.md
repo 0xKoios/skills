@@ -145,24 +145,23 @@ Agent: I can only edit or remove your own comments. #9930 is Anan's.
 ```text
 You:   Help me write AC for #820
 
-Agent: First time writing acceptance criteria. Is your work data engineering
-       or general? And may I read your team's last 10 closed stories to match
-       their style?
-You:   data engineering, yes
-Agent: Your team writes 3 to 5 bullets, no Given/When/Then, and almost always
-       a row-count check. Saved to config ✓
+Agent: First time writing acceptance criteria. May I read your team's last 10
+       closed stories to match their style?
+You:   yes
+Agent: Your team writes 3 to 5 bullets, no Given/When/Then. Saved to config ✓
 
        #820 "Customer churn features table" has no description or AC.
        Tell me what you know.
 You:   Analysts need one table with churn features per customer for the model.
 
-Agent: 4 questions (only what applies):
-       1. Source tables, and which customers are in scope?
-       2. Key and grain: one row per customer per day, or per customer?
-       3. When must it be fresh, and how far back?
-       4. Who confirms it is done?
-You:   1 crm.customers + silver.orders, active customers. 2 per customer per day.
-       3 by 07:00, 2 years back. 4 Mali from analytics.
+Agent: Clarifying:
+       1. Who needs it, and what does done look like?
+       2. Source and which customers are in scope?
+       3. Grain: one row per customer per day, or per customer?
+       4. How would someone else check pass vs fail (freshness, counts, owner)?
+You:   1 analysts / churn model ready. 2 crm.customers + silver.orders, active.
+       3 per customer per day. 4 by 07:00, row count matches active customers,
+       Mali confirms.
 
 Agent: DRAFT
        Description: Analysts need a daily churn features table, one row per active
@@ -171,7 +170,6 @@ Agent: DRAFT
        - One row per active customer per day; no duplicate (customer_id, date)
        - Row count per day matches active customers in crm.customers
        - Table is refreshed by 07:00 daily
-       - History backfilled for the last 2 years
        - Mali (analytics) confirmed the output
        Write to #820?
 You:   yes

@@ -1,8 +1,8 @@
 # ado-boards config
 
-Template only. Setup (`workflows/setup.md`) copies this to `~/.config/ado-boards/config.md` (Windows: `%USERPROFILE%\.config\ado-boards\config.md`) and fills it in. The path belongs to no single AI tool, so the same config works in Copilot, Claude Code, Cursor or any other agent. Never put real values in this file: it is in a public repo.
+Template only. Setup (`workflows/setup.md`) copies this to `~/.config/ado-boards/config.md` (Windows: `%USERPROFILE%\.config\ado-boards\config.md`) and fills it in. Shared across agents. Leave this file blank of secrets — it ships in a public repo.
 
-The agent has no memory between chats; this file is how it remembers your project. Values marked `not set yet` are collected the first time a workflow needs them.
+The agent has no memory between chats; this file is how it remembers the project. Values marked `not set yet` are collected the first time a workflow needs them.
 
 ## Connection (core setup)
 - Organization URL: https://dev.azure.com/<org>
@@ -18,7 +18,7 @@ The agent has no memory between chats; this file is how it remembers your projec
 ## Team rules (core setup)
 - Parent required: yes
 - Bugs are created: here
-  (or: in another system, e.g. "in ExternalTracker", and then this skill does not create bugs)
+  (or: in another system, e.g. "in ExternalTracker" — then this skill offers Tasks under existing bugs)
 - Cards from another system: none
   (or: name and title prefix, e.g. "ExternalTracker, prefix EXT")
 - Do comments on those cards sync back to the other system? unknown
@@ -37,8 +37,7 @@ The agent has no memory between chats; this file is how it remembers your projec
 - not set yet
 
 ## Acceptance criteria (collected on first "write acceptance criteria")
-- Checklist: not set yet (data engineering, or general)
-- Team style: not set yet (e.g. 3 to 5 bullets, no Given/When/Then, always a row-count check)
+- Team style: not set yet (e.g. 3 to 5 bullets, no Given/When/Then)
 
 ## Default area path (used only when a parent has none)
 - <project>\<area>

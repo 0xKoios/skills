@@ -1,55 +1,64 @@
 ---
 name: ado-boards
-description: Manage your own Azure DevOps (ADO) Boards work items through Azure DevOps MCP tools or the az CLI. See what's on my plate, create a task or story under a parent, move or close a ticket, log hours or days, add, list, edit or remove my comments, write a description or acceptance criteria, and plan my sprint in priority order. Use it whenever the user talks about their ADO or Azure Boards cards, tickets, work items, stories, tasks, sprint or board, or refers to an item by number like #512, even if they do not say "Azure DevOps". Also use it to set up the ado skill. Not for writing the code, SQL or pipelines themselves.
+description: >-
+  Azure Boards / ADO cards (tickets, work items, stories, tasks). Use when the
+  user mentions their board, sprint, plate, or an item like #512 — even without
+  saying Azure DevOps. Branches: set up the ado skill; show my cards; create or
+  break into tasks; move or close; log time; comments; description or acceptance
+  criteria; plan my sprint / what first. Board operations only (not app code,
+  SQL, or pipelines).
 license: MIT
 ---
 
-# Azure DevOps Boards: my work items
+# Azure DevOps Boards: my cards
 
-You help one person manage their own work items ("cards") in Azure Boards, through Azure DevOps MCP tools or the `az` CLI. Their team's conventions live in a config file, so the same skill fits different teams.
+Help one person manage their own **cards** on Azure Boards via MCP or `az`. Team conventions live in **config**; the same skill fits different teams.
 
 ## 1. Before anything else
 
-1. **Read the config:** `~/.config/ado-boards/config.md` (Windows: `%USERPROFILE%\.config\ado-boards\config.md`). If it is missing, offer the short core setup (`workflows/setup.md`) before anything else: without it you would be guessing the org, project and team rules, and a wrong guess writes to the wrong place. A value marked `not set yet` is collected the first time a workflow needs it (setup explains how).
-2. **Pick the backend:**
-   - **MCP:** if Azure DevOps MCP tools are available (e.g. `wit_work_item`), use them. Tool map: `mcp-tools.md`. Read only that map (plus one az gap file if a documented MCP gap requires it). Do not load the az tree “just in case”.
-   - **az:** otherwise use the `az` CLI. Commands live under `az/` — read `az/README.md` plus only the matching section file for this workflow. Do not load other az sections or `mcp-tools.md` in the same turn unless a documented MCP gap requires that one az file, or (only when an HTML description/AC write comes back mangled or PowerShell quoting fails) also `az/windows.md`. Check `az account show` (or `AZURE_DEVOPS_EXT_PAT` is set); if neither, ask the user to log in themselves.
-   - Neither: point to setup. Never ask for, print or store a PAT or token: chat history and logs are not a safe place for credentials.
+1. **Read config** — `~/.config/ado-boards/config.md` (Windows: `%USERPROFILE%\.config\ado-boards\config.md`). Missing → run core setup (`workflows/setup.md`) first; guessing org/project writes to the wrong place. Values marked `not set yet` are collected the first time a workflow needs them.
+2. **Pick backend** for this turn only:
+   - **MCP** when Azure DevOps MCP tools are available (e.g. `wit_work_item`): load `mcp-tools.md` (plus one `az/` gap file only when that map documents an MCP gap).
+   - **az** otherwise: load `az/README.md` plus the one section file for this workflow. Also `az/windows.md` only when an HTML description/AC write comes back mangled, or PowerShell quoting fails. Confirm login (`az account show` or `AZURE_DEVOPS_EXT_PAT`); if neither, the user runs `az login` themselves.
+   - **Neither** → point at setup.
+3. **Open the matching workflow** (table below) and follow it. Workflows say what; the backend file says how. Rules in §2 bind both backends.
 
-Workflows say what to do; look up how in the backend's file. The rules below apply to both.
+Done when config is in hand, one backend is chosen, and the workflow file is open.
+
+User signs in themselves (Entra / `az login`). Credentials stay out of chat.
 
 ## 2. Rules
 
-**Reading never needs permission. Every write does,** even when the tool itself does not ask. The board is shared with the team, and MCP write tools often run without a prompt, so your preview is the only chance to catch a mistake before others see it.
+**Reads need no permission. Every write needs a preview and an explicit yes** — even when the tool itself does not ask. The board is shared; MCP writes often skip a prompt, so **preview** is the gate.
 
-- **Preview size:** one change to one of the user's own cards gets a one-line preview, e.g. `#512: State Active -> Closed. OK?`. Several changes, or a card assigned to someone else, get a table (ID, field, old, new). More than 10 changes: state the count and ask again, because a large batch is where a wrong filter does real damage.
-- **Read back after every write** and report ID, what changed, and the URL `https://dev.azure.com/<org>/<project>/_workitems/edit/<id>`. Writes can partly fail or be changed by rules on the server; the read-back shows what is really there.
-- **Parents:** if the config says `Parent required: yes`, never create a card without one. Teams that require parents lose orphan cards from their backlog views.
-- **Bugs:** if the config says bugs are created in another system, do not create them here; a second copy splits the history and the reporter never sees it. Offer a Task under the existing bug instead.
-- **Cards from another system** (title prefix in config, e.g. ExternalTracker `EXT`): before commenting or changing a field, warn that comments may sync back and be visible to the reporter. Do not ask for an Impact note on them.
-- **Units:** time fields (Original Estimate, Remaining Work, Completed Work) are plain numbers; the team's unit is in the config. Convert when the user speaks in another unit and show both, and always say the unit. Azure Boards labels these fields "h" whatever the team uses, so an unlabeled number is easily misread by a factor of 8.
-- **Never delete a card,** and remove a comment only after showing it in full and getting an explicit "yes". Neither can be undone.
-- **Comments:** edit or remove only the user's own. Azure DevOps rejects the rest anyway, and trying wastes a step.
-- **Do not invent values** (estimates, assignees, dates, impact). Made-up numbers look real on the board and feed the team's planning. Ask, or leave blank.
-- Quote values safely; titles can contain quotes. With az, read `az/windows.md` only when an HTML description or acceptance-criteria write comes back mangled, or when PowerShell quoting fails.
-- **After a write,** end with what you did, what you did not do, and one suggested next step. For plain reads, just answer.
+| Rule | Criterion |
+|---|---|
+| **Preview size** | One change on the user's own card → one line (`#512: State Active -> Closed. OK?`). Several changes, or someone else's card → table (ID, field, old, new). More than 10 → state the count and confirm again. |
+| **Read-back** | After every write: report ID, what changed, URL `https://dev.azure.com/<org>/<project>/_workitems/edit/<id>`. |
+| **Parents** | When config says `Parent required: yes`, create only with a parent (orphans drop out of backlog views). |
+| **Bugs** | When config says bugs live elsewhere: offer a Task under the existing bug (a second Bug splits history). |
+| **External cards** | Title prefix in config (e.g. `EXT`): warn that comments may sync to the reporter before comment or field change; skip Impact on close. |
+| **Units** | Time fields are plain numbers; unit is in config. Convert when the user speaks another unit, show both, always name the unit (Boards UI says "h" either way). |
+| **Cards stay** | Close or move; leave the card on the board. Remove a comment only after showing it in full and getting yes — neither is undoable. |
+| **Own comments** | Edit or remove only the user's own (ADO rejects the rest). |
+| **Real values** | Ask for estimates, assignees, dates, impact — or leave blank. Invented numbers look real on the board. |
+| **Safe quotes** | Quote values safely; titles may contain quotes. |
+| **Write footer** | After a write: what you did, what you skipped, one next step. Plain reads: answer only. |
 
 ## 3. Workflows
 
-Pick the one that matches the request, read its file, and follow it.
-
-| Request | File |
+| When | Open |
 |---|---|
-| "set up the ado skill", config missing, or something changed | `workflows/setup.md` |
-| "what's on my plate", "show my cards", move, log time, close | `workflows/my-cards.md` |
-| create a card, or break a story into tasks | `workflows/create-card.md` |
-| add, list, edit or remove a comment | `workflows/comments.md` |
-| write or improve a description or acceptance criteria | `workflows/write-description.md` |
-| "plan my sprint", "what should I work on first" | `workflows/plan-my-sprint.md` |
+| Set up the ado skill; config missing; something changed | `workflows/setup.md` |
+| What's on my plate; show my cards; move; log time; close | `workflows/my-cards.md` |
+| Create a card; break a story into tasks | `workflows/create-card.md` |
+| Add, list, edit, or remove a comment | `workflows/comments.md` |
+| Description or acceptance criteria | `workflows/write-description.md` |
+| Plan my sprint; what should I work on first | `workflows/plan-my-sprint.md` |
 
 ## 4. Agile reference (verify against config)
 
-Hierarchy: Epic > Feature > User Story > Task. Bugs sit beside or under stories depending on a team setting.
+Hierarchy: Epic > Feature > User Story > Task. Bugs sit beside or under stories per team setting.
 
 | Type | States |
 |---|---|
@@ -57,4 +66,4 @@ Hierarchy: Epic > Feature > User Story > Task. Bugs sit beside or under stories 
 | Bug | New, Active, Resolved, Closed |
 | Task | New, Active, Closed, Removed |
 
-Parents: Task under User Story (or Bug), User Story under Feature. Custom states and required fields are listed in the config once collected.
+Parents: Task under User Story (or Bug), User Story under Feature. Custom states and required fields live in config once collected.

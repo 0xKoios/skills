@@ -9,3 +9,7 @@ desc.html
 .worktrees/
 .superpowers/
 docs/superpowers/
+
+# Local npx skills installs (project scope) — not part of this collection
+.agents/
+skills-lock.json

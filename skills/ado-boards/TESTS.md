@@ -44,8 +44,8 @@ Run these in the agent you installed the skill in (Copilot, Claude Code, Cursor,
 | 13 | Close a card from another system | No Impact question | [ ] |
 | 14 | "plan my sprint" with a blocked card | Blocked card at the bottom with who to chase; nothing written to the board | [ ] |
 | 14b | First "plan my sprint" (priority tags not set yet) | Offers to collect priority tags first; "skip" still gives an order | [ ] |
-| 15 | "write AC for #<data story>" | Asks only about applicable data checks; 3 to 7 pass/fail bullets in team style | [ ] |
-| 15b | First "write AC" (checklist not set yet) | Asks data engineering or general, offers to learn the team style first | [ ] |
+| 15 | "write AC for #<story>" | Asks clarifying questions for description and pass/fail AC; 3 to 7 bullets in team style | [ ] |
+| 15b | First "write AC" (team style not set yet) | Offers to learn the team style from recent closed stories first | [ ] |
 | 16 | Any write | Ends with done / not done / next step | [ ] |
 | 17 | "show my cards" (a plain read) | Just the answer, no done / not done footer | [ ] |
 
