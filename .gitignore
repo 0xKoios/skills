@@ -1,0 +1,10 @@
+# Real config lives in ~/.config/ado-boards/config.md, never in this repo.
+config.md
+*.local.md
+comment.json
+desc.html
+.DS_Store
+
+# Isolated worktrees
+.worktrees/
+.superpowers/
