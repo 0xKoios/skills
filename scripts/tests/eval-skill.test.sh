@@ -94,12 +94,15 @@ t_regex_backslash_survives() {
   expect regex_backslash_survives "$([ "$code" -eq 0 ] && echo 0 || echo 1)" "got exit $code"
 }
 
-t_unimplemented_agent_exits_2() {
-  run_eval demo claude --case says-ok --trials 1
+t_missing_cli_exits_2() {
+  local bin; bin=$(mktemp -d)
+  for c in jq mktemp dirname; do ln -s "$(command -v $c)" "$bin/$c"; done
+  out=$(PATH="$bin" SKILLS_DIR="$F/skills" EVAL_OUT_DIR="$(mktemp -d)" /bin/bash "$runner" demo cursor --case says-ok --trials 1 2>&1)
+  code=$?
   local ok=0
   [ "$code" -eq 2 ] || ok=1
-  contains "agent claude not implemented yet" || ok=1
-  expect unimplemented_agent_exits_2 "$ok" "got exit $code"
+  contains "cursor-agent not installed" || ok=1
+  expect missing_cli_exits_2 "$ok" "got exit $code"
 }
 
 t_failed_assertion_fails_trial() {
@@ -111,7 +114,7 @@ t_failed_assertion_fails_trial() {
   expect failed_assertion_fails_trial "$ok" "got exit $code"
 }
 
-t_regex_backslash_survives; t_unimplemented_agent_exits_2; t_failed_assertion_fails_trial
+t_regex_backslash_survives; t_missing_cli_exits_2; t_failed_assertion_fails_trial
 t_case_passes; t_case_fails; t_majority_rule; t_baseline_runs_without; t_prompt_is_passed_verbatim
 t_grader_garbage_fails_trial; t_unknown_agent_exits_2; t_unknown_case_exits_2; t_warns_global_skill_dirs
 echo "$passed passed, $failed failed"

@@ -12,13 +12,22 @@ grader_tpl="$here/eval-grader.md"
 
 usage() { echo "usage: eval-skill.sh <skill> <agent> [--case <id>] [--trials N] [--baseline] [--grader <agent>]" >&2; exit 2; }
 
-# agent_implemented <agent>: true when run_agent and skill_dir_for have a branch for it.
-agent_implemented() { [ "$1" = stub ]; }
+# cli_for <agent>: the CLI binary an agent needs on PATH (empty for stub).
+cli_for() {
+  case "$1" in
+    claude) echo claude ;;
+    cursor) echo cursor-agent ;;
+    copilot) echo copilot ;;
+  esac
+}
 
 # skill_dir_for <agent>: workspace-relative dir where the agent discovers skills.
 skill_dir_for() {
   case "$1" in
     stub) echo ".agents/skills" ;;
+    claude) echo ".claude/skills" ;;
+    cursor) echo ".cursor/skills" ;;
+    copilot) echo ".github/skills" ;;
     *) echo "agent $1 not implemented yet" >&2; return 1 ;;
   esac
 }
@@ -31,6 +40,14 @@ run_agent() {
     stub)
       [ -n "${EVAL_STUB_CMD:-}" ] || { echo "EVAL_STUB_CMD is not set" >&2; return 1; }
       "$EVAL_STUB_CMD" "$ws" "$prompt" > "$outf" ;;
+    claude)
+      (cd "$ws" && claude -p "$(cat "$prompt")" --output-format text \
+        --allowedTools "Read" "Glob" "Grep" "Edit" "Write" "Bash(python3 *)" "Bash(git *)") > "$outf" ;;
+    cursor)
+      cursor-agent -p --trust --workspace "$ws" --output-format text "$(cat "$prompt")" > "$outf" ;;
+    copilot)
+      (cd "$ws" && copilot -p "$(cat "$prompt")" -s --no-ask-user \
+        --allow-tool='write, shell(python3:*), shell(git:*)') > "$outf" ;;
     *) echo "agent $agent not implemented yet" >&2; return 1 ;;
   esac
 }
@@ -54,7 +71,8 @@ for a in "$agent" "$grader"; do
   case "$a" in claude|cursor|copilot|stub) ;; *) echo "unknown agent: $a" >&2; exit 2 ;; esac
 done
 for a in "$agent" "$grader"; do
-  agent_implemented "$a" || { echo "agent $a not implemented yet" >&2; exit 2; }
+  cli=$(cli_for "$a")
+  [ -z "$cli" ] || command -v "$cli" >/dev/null 2>&1 || { echo "$cli not installed" >&2; exit 2; }
 done
 
 skill_path="$SKILLS_DIR/$skill"
