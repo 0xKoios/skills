@@ -1,0 +1,21 @@
+{
+  "skill_name": "demo",
+  "evals": [
+    {
+      "id": "says-ok",
+      "prompt": "/demo",
+      "checks": [{ "type": "output_matches", "pattern": "DEMO-OK" }],
+      "assertions": ["Says DEMO-OK"]
+    },
+    {
+      "id": "impossible",
+      "prompt": "/demo",
+      "checks": [{ "type": "output_matches", "pattern": "NEVER-PRINTED" }]
+    },
+    {
+      "id": "quoted",
+      "prompt": "it's \"$HOME\" `x`\nend",
+      "checks": [{ "type": "output_matches", "pattern": "DEMO-OK" }]
+    }
+  ]
+}
