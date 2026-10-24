@@ -16,6 +16,16 @@
       "id": "quoted",
       "prompt": "it's \"$HOME\" `x`\nend",
       "checks": [{ "type": "output_matches", "pattern": "DEMO-OK" }]
+    },
+    {
+      "id": "escaped",
+      "prompt": "/demo",
+      "checks": [{ "type": "output_matches", "pattern": "DEMO\\-OK" }]
+    },
+    {
+      "id": "assert-only",
+      "prompt": "/demo",
+      "assertions": ["Says DEMO-OK"]
     }
   ]
 }

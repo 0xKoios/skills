@@ -12,20 +12,26 @@ grader_tpl="$here/eval-grader.md"
 
 usage() { echo "usage: eval-skill.sh <skill> <agent> [--case <id>] [--trials N] [--baseline] [--grader <agent>]" >&2; exit 2; }
 
+# agent_implemented <agent>: true when run_agent and skill_dir_for have a branch for it.
+agent_implemented() { [ "$1" = stub ]; }
+
 # skill_dir_for <agent>: workspace-relative dir where the agent discovers skills.
 skill_dir_for() {
   case "$1" in
     stub) echo ".agents/skills" ;;
-    *) echo "agent $1 not implemented yet" >&2; exit 2 ;;
+    *) echo "agent $1 not implemented yet" >&2; return 1 ;;
   esac
 }
 
 # run_agent <agent> <workspace> <prompt-file> <out-file>: run the agent, write its reply to out-file.
+# Returns nonzero on failure (callers record a failure reason).
 run_agent() {
   local agent="$1" ws="$2" prompt="$3" outf="$4"
   case "$agent" in
-    stub) "${EVAL_STUB_CMD:?EVAL_STUB_CMD is not set}" "$ws" "$prompt" > "$outf" ;;
-    *) echo "agent $agent not implemented yet" >&2; exit 2 ;;
+    stub)
+      [ -n "${EVAL_STUB_CMD:-}" ] || { echo "EVAL_STUB_CMD is not set" >&2; return 1; }
+      "$EVAL_STUB_CMD" "$ws" "$prompt" > "$outf" ;;
+    *) echo "agent $agent not implemented yet" >&2; return 1 ;;
   esac
 }
 
@@ -47,6 +53,9 @@ grader="${grader:-$agent}"
 for a in "$agent" "$grader"; do
   case "$a" in claude|cursor|copilot|stub) ;; *) echo "unknown agent: $a" >&2; exit 2 ;; esac
 done
+for a in "$agent" "$grader"; do
+  agent_implemented "$a" || { echo "agent $a not implemented yet" >&2; exit 2; }
+done
 
 skill_path="$SKILLS_DIR/$skill"
 evals_json="$skill_path/evals/evals.json"
@@ -62,7 +71,8 @@ done
 
 # install_skills <workspace>: copy the skill and its `install` extras into the agent's skills dir.
 install_skills() {
-  local dest="$1/$(skill_dir_for "$agent")" pat f
+  local dest pat f
+  dest="$1/$(skill_dir_for "$agent")" || return 1
   mkdir -p "$dest"
   cp -R "$skill_path" "$dest/"
   while IFS= read -r pat; do
@@ -71,9 +81,10 @@ install_skills() {
   done < <(jq -r '.install[]?' "$evals_json")
 }
 
-# grade <output-file> <assertions-json> <workspace>: echoes a failure reason, or nothing if all pass.
+# grade <output-file> <assertions-json> <prompt-file> <grader-workspace> <grader-out-file>:
+# echoes a failure reason, or nothing if all pass. The grader workspace is fresh and empty.
 grade() {
-  local outf="$1" assertions="$2" ws="$3" tpl head tail list prompt gout json
+  local outf="$1" assertions="$2" gprompt="$3" gws="$4" gouts="$5" tpl head tail list prompt gout json verdict
   tpl=$(<"$grader_tpl")
   list=$(printf '%s' "$assertions" | jq -r '.[] | "- " + .')
   head="${tpl%%'{{OUTPUT}}'*}"
@@ -81,46 +92,49 @@ grade() {
   prompt="$head$(<"$outf")$tail"
   head="${prompt%%'{{ASSERTIONS}}'*}"
   tail="${prompt#*'{{ASSERTIONS}}'}"
-  printf '%s' "$head$list$tail" > "$ws/grader-prompt.txt"
-  mkdir -p "$ws/grader-ws"
-  run_agent "$grader" "$ws/grader-ws" "$ws/grader-prompt.txt" "$ws/grader-out.txt"
-  gout=$(<"$ws/grader-out.txt")
+  printf '%s' "$head$list$tail" > "$gprompt"
+  rm -rf "$gws"; mkdir -p "$gws"
+  run_agent "$grader" "$gws" "$gprompt" "$gouts" </dev/null || { echo "grader run failed"; return; }
+  gout=$(<"$gouts")
   json="${gout#*\{}"
   if [ "$json" = "$gout" ]; then echo "grader output unparsable"; return; fi
   json="{${json%\}*}}"
-  if ! printf '%s' "$json" | jq -e '.results | type == "array"' >/dev/null 2>&1; then
+  if ! printf '%s' "$json" | jq -e '.results | type == "array" and all(type == "object")' >/dev/null 2>&1; then
     echo "grader output unparsable"; return
   fi
-  printf '%s' "$json" | jq -r --argjson want "$assertions" '
+  verdict=$(printf '%s' "$json" | jq -r --argjson want "$assertions" '
     . as $g
     | [$want[] as $a | ($g.results | map(select(.assertion == $a)) | first) as $r
        | if $r == null or $r.passed != true then "assertion failed: " + $a else empty end]
-    | first // empty'
+    | first // empty') || { echo "grader output unparsable"; return; }
+  printf '%s' "$verdict"
 }
 
 # run_trial <id> <with|without> <n>: echoes a failure reason, or nothing if the trial passes.
 run_trial() {
-  local id="$1" mode="$2" n="$3" ws promptf outf reason t pat ty f
+  local id="$1" mode="$2" n="$3" ws promptf outf reason t pat ty f line
   ws="$EVAL_OUT_DIR/$id/$mode/trial-$n"
   rm -rf "$ws"; mkdir -p "$ws"
-  [ "$mode" = with ] && install_skills "$ws"
+  if [ "$mode" = with ]; then install_skills "$ws" || { echo "skill install failed"; return; }; fi
   while IFS= read -r f; do
     [ -n "$f" ] && cp "$skill_path/$f" "$ws/$(basename "$f")"
   done < <(jq -r --arg id "$id" '.evals[] | select(.id == $id) | .files[]?' "$evals_json")
   promptf="$ws.prompt.txt"; outf="$ws.out.txt"
   jq -j --arg id "$id" '.evals[] | select(.id == $id) | .prompt' "$evals_json" > "$promptf"
-  run_agent "$agent" "$ws" "$promptf" "$outf" || { echo "agent run failed"; return; }
-  while IFS=$'\t' read -r ty pat; do
-    [ -n "$ty" ] || continue
+  run_agent "$agent" "$ws" "$promptf" "$outf" </dev/null || { echo "agent run failed"; return; }
+  # \001 separator: unlike @tsv it leaves regex backslashes intact.
+  while IFS= read -r line; do
+    [ -n "$line" ] || continue
+    ty="${line%%$'\001'*}"; pat="${line#*$'\001'}"
     if [ "$ty" = output_matches ]; then
       grep -Eq -- "$pat" "$outf" || { echo "output_matches $pat"; return; }
     else
       ! grep -Eq -- "$pat" "$outf" || { echo "output_not_matches $pat"; return; }
     fi
-  done < <(jq -r --arg id "$id" '.evals[] | select(.id == $id) | .checks[]? | [.type, .pattern] | @tsv' "$evals_json")
+  done < <(jq -r --arg id "$id" '.evals[] | select(.id == $id) | .checks[]? | [.type, .pattern] | join("\u0001")' "$evals_json")
   t=$(jq -c --arg id "$id" '.evals[] | select(.id == $id) | .assertions // []' "$evals_json")
   if [ "$t" != "[]" ]; then
-    reason=$(grade "$outf" "$t" "$ws")
+    reason=$(grade "$outf" "$t" "$ws.grader-prompt.txt" "$EVAL_OUT_DIR/$id/grader/$mode-trial-$n" "$ws.grader-out.txt")
     [ -z "$reason" ] || { echo "$reason"; return; }
   fi
 }
