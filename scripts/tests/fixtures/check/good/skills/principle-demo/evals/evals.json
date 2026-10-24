@@ -1,0 +1,17 @@
+{
+  "skill_name": "principle-demo",
+  "evals": [
+    {
+      "id": "one",
+      "prompt": "do the thing",
+      "expected_output": "The thing is done.",
+      "checks": [{ "type": "output_matches", "pattern": "done" }]
+    },
+    {
+      "id": "two",
+      "prompt": "do another thing",
+      "expected_output": "Another thing is done.",
+      "assertions": ["Mentions the other thing"]
+    }
+  ]
+}
