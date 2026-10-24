@@ -1,0 +1,12 @@
+{
+  "skill_name": "principle-laziness-protocol",
+  "evals": [
+    {
+      "id": "smallest-diff",
+      "prompt": "/principle-laziness-protocol add retry to fetch() in client.py, and maybe a plugin system for future retry strategies",
+      "expected_output": "A plain retry in fetch(), with the plugin system declined and a reason given.",
+      "files": ["evals/files/client.py"],
+      "assertions": ["Adds a plain retry and declines the plugin system with a reason."]
+    }
+  ]
+}

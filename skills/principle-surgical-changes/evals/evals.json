@@ -1,0 +1,15 @@
+{
+  "skill_name": "principle-surgical-changes",
+  "evals": [
+    {
+      "id": "mentions-not-fixes",
+      "prompt": "/principle-surgical-changes fix the typo 'ammount' in load.py",
+      "expected_output": "Only the typo is fixed; the unused import is mentioned and left in place.",
+      "files": ["evals/files/load.py"],
+      "assertions": [
+        "Fixes only the typo.",
+        "Mentions the unused import without removing it."
+      ]
+    }
+  ]
+}

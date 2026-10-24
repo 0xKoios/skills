@@ -1,0 +1,11 @@
+{
+  "skill_name": "principle-outcome-oriented-execution",
+  "evals": [
+    {
+      "id": "no-compat-shim",
+      "prompt": "/principle-outcome-oriented-execution migrate our internal config loader to the new format, keep the old one working just in case",
+      "expected_output": "Internal callers move to the new loader and the old one is deleted, with no compatibility layer.",
+      "assertions": ["Converges on the new loader and deletes the old one for internal callers, with no compatibility layer."]
+    }
+  ]
+}
