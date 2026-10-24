@@ -1,0 +1,16 @@
+{
+  "skill_name": "principle-model-the-domain",
+  "evals": [
+    {
+      "id": "state-machine",
+      "prompt": "/principle-model-the-domain review order.py",
+      "expected_output": "One status field or state machine replaces the five booleans.",
+      "files": [
+        "evals/files/order.py"
+      ],
+      "assertions": [
+        "Proposes one state field or state machine in place of the booleans."
+      ]
+    }
+  ]
+}

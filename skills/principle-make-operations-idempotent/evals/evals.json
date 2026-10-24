@@ -1,0 +1,16 @@
+{
+  "skill_name": "principle-make-operations-idempotent",
+  "evals": [
+    {
+      "id": "rerun-converges",
+      "prompt": "/principle-make-operations-idempotent review daily_load.py",
+      "expected_output": "A rerun for the same date duplicates rows; overwrite the date's partition or merge on a key.",
+      "files": [
+        "evals/files/daily_load.py"
+      ],
+      "assertions": [
+        "Says a rerun duplicates rows, and proposes overwrite-by-partition or merge on a key."
+      ]
+    }
+  ]
+}

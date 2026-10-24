@@ -1,0 +1,16 @@
+{
+  "skill_name": "principle-boundary-discipline",
+  "evals": [
+    {
+      "id": "guards-at-edge",
+      "prompt": "/principle-boundary-discipline review api.py",
+      "expected_output": "Validation moves to the request handler and the internal re-checks are removed.",
+      "files": [
+        "evals/files/api.py"
+      ],
+      "assertions": [
+        "Moves validation to the request boundary and removes the internal re-checks."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-type-system-discipline",
+  "evals": [
+    {
+      "id": "illegal-states",
+      "prompt": "/principle-type-system-discipline design the type for a payment that is either pending, paid with a receipt id, or failed with a reason",
+      "expected_output": "A tagged union with one variant per state, each carrying only its own data.",
+      "assertions": [
+        "Uses a tagged union (or the language's equivalent) so a receipt id can't exist on a failed payment."
+      ]
+    }
+  ]
+}

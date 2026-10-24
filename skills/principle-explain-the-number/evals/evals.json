@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-explain-the-number",
+  "evals": [
+    {
+      "id": "no-invented-number",
+      "prompt": "/principle-explain-the-number the job got 3x faster after my change, put that in the PR",
+      "expected_output": "Asks for or runs the measurement and its limiter before any speedup goes in the PR.",
+      "assertions": [
+        "Asks for or runs the measurement, checks what limits it, and does not repeat '3x' without evidence."
+      ]
+    }
+  ]
+}
