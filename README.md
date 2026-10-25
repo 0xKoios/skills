@@ -10,9 +10,10 @@ Needs [Node.js](https://nodejs.org/) 22.20+.
 
 ```bash
 npx skills add 0xKoios/skills -s ado-boards -g
+npx skills add 0xKoios/skills -s brag-docs -g
 ```
 
-Done when the agent lists `ado-boards`. Swap `-s brag-docs` (or any skill name) the same way. `-g` makes it available in every project. Target agents with `-a` (e.g. `-a cursor`, or `-a '*'` / `--all`). Inventory: `npx skills add 0xKoios/skills -l`. Refresh: `npx skills update`. On Windows without symlinks, add `--copy`. Further flags: `npx skills --help`.
+Done when the agent lists the skill you installed. `-g` makes it available in every project. Target agents with `-a` (e.g. `-a cursor`, or `-a '*'` / `--all`). Inventory: `npx skills add 0xKoios/skills -l`. Refresh: `npx skills update`. On Windows without symlinks, add `--copy`. Further flags: `npx skills --help`.
 
 ## Skills
 
@@ -28,9 +29,10 @@ Done when the agent lists `ado-boards`. Swap `-s brag-docs` (or any skill name) 
 ```bash
 git clone https://github.com/0xKoios/skills ~/code/skills
 ln -s ~/code/skills/skills/ado-boards ~/.claude/skills/ado-boards
+ln -s ~/code/skills/skills/brag-docs ~/.claude/skills/brag-docs
 ```
 
-Other agents use the same idea with their skills path (`~/.cursor/skills/ado-boards`, `~/.copilot/skills/ado-boards`). Done when the agent loads this clone as its only copy of that skill — clear any prior `npx skills` install of the same name, then link.
+Other agents use the same idea with their skills path (`~/.cursor/skills/<name>`, `~/.copilot/skills/<name>`). Done when the agent loads this clone as its only copy of that skill — clear any prior `npx skills` install of the same name, then link.
 
 ## License
 
