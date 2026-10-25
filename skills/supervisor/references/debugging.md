@@ -53,7 +53,7 @@ Post the list and keep working without waiting for a reply. The user may re-rank
 
 ## 4. Probe
 
-- **Probes run on dev or sample environments only.** Never probe production, because a probe there can change what users see. If a probe would write to production, preview it and wait for a yes (`../../principle-look-before-you-write/SKILL.md`).
+- **Probes run on dev or sample environments only.** A probe that would touch production isn't run, because a probe there can change what users see. Ask the user instead, saying what you wanted to check and why (`../../principle-look-before-you-write/SKILL.md`).
 - **One variable per probe,** each tied to one hypothesis's prediction. Changing two things at once tells you nothing about either.
 - **Prefer a debugger or REPL,** then targeted logs at the boundaries that split hypotheses. Never log everything and grep.
 - **Tag every debug log** with `[DEBUG-<4 hex>]`, for example `[DEBUG-a4f2]`, using one tag per session. Cleanup is then one grep, and an untagged log survives into the commit.

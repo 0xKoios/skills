@@ -50,7 +50,7 @@ Before you propose anything, think of several approaches privately and drop the 
 
 Stop when the spec could be written without guessing: every branch is visited and nothing that changes what gets built is silently assumed.
 
-1. Ask one line: "Anything else before I write the spec?"
+1. Ask one line: "Ready for me to write the spec?" A yes means proceed. Anything else means more questions.
 2. On the user's yes, create the spec file and write `Gate: questions done YYYY-MM-DD` in its status block, with today's date. See `specs-and-plans.md` for the location and status block.
 
 <!-- Adapted from skills/productivity/grilling/SKILL.md (mattpocock/skills, MIT, Matt Pocock) and skills/brainstorming/SKILL.md (obra/superpowers, MIT, Jesse Vincent). Took: grilling's decision tree, settled-prerequisites ordering, "yes accepts the recommendation" wording, and facts-are-yours rule; brainstorming's open questions first, guesses the user can correct, menus only when stuck, ground to cover, defaults said out loud, and thinking wide privately. Changed: one single-sentence question per message instead of numbered rounds, no playback chunks or section walkthrough, an explicit brainstorm-or-grill choice made once per task, a stop rule tied to the spec gate line, and dropped the visual companion, spikes, sizing table, and skip-the-questions offer. -->

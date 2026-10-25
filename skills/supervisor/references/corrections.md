@@ -8,19 +8,19 @@ When the user corrects you ("no, don't do that", "that's wrong, we always..."), 
 2. **Name the file that caused the mistake.**
    - A skill file (the router, a playbook, a reference, a principle leaf) when its instructions led you there.
    - The work repo's **AGENTS.md** when the correction is a fact about that project, such as a naming rule or a table owner.
-3. **Find the clone.** Approved edits go in the user's clone of `0xKoios/skills`, never only in the installed copy, because the next install overwrites the installed copy.
+3. **Find the clone (skill-file corrections only).** An approved skill edit goes in the user's clone of `0xKoios/skills`, never only in the installed copy, because the next install overwrites the installed copy. For an **AGENTS.md** correction, skip this step: the file shown and edited is the work repo's.
    1. Run `realpath` on the installed skill file.
    2. If the result is inside a git repo whose remote matches `0xKoios/skills` (check `git -C <dir> remote -v`), use that repo's top level (`git -C <dir> rev-parse --show-toplevel`).
    3. Otherwise read the `clone:` line from `~/.config/supervisor/config.md`.
    4. If that file is missing, ask the user once for the clone's absolute path. Write the file with the single line `clone: <absolute path>`, so you never ask again.
 4. **Show the proposal** in one message:
-   - the file path in the clone;
+   - the file path: in the clone for a skill file, in the work repo for **AGENTS.md**;
    - a unified diff of the edit;
    - a new eval case for that skill's `evals/evals.json`, with the real prompt that led to the mistake and the expected behavior. See `eval-cases.md` for the format. If the skill has no evals.json yet, propose creating it.
 
-   For an **AGENTS.md** edit, show the path and diff only. Project facts have no eval suite, so list the case and the eval run as `skip: project fact, no eval suite`.
+   For an **AGENTS.md** edit, show the work repo's path and the diff only. Project facts have no eval suite, so list the case and the eval run as `skip: project fact, no eval suite`.
 5. **Wait for an explicit yes.** Silence, "hmm", or a new question isn't a yes. Keep working on the original task meanwhile only if it doesn't depend on the correction.
-6. **Apply and run the case.** Apply the edit and the case in the clone. Run there, with your harness as `<agent>` (claude, cursor, or copilot):
+6. **Apply and run the case.** Apply a skill edit and its case in the clone. Apply an **AGENTS.md** edit in the work repo and skip the run. Run there, with your harness as `<agent>` (claude, cursor, or copilot):
 
    ```bash
    scripts/eval-skill.sh <skill> <agent> --case <id> --trials 3
