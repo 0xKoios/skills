@@ -29,9 +29,9 @@ The workflow that turns fresh notes or a short interview into one or more entrie
 _Avoid_: log, add (as the command name)
 
 **brag-backfill**:
-The workflow that reconstructs entries for a time range, optionally scanning dig sources.
+The workflow that reconstructs entries for a time range, optionally scanning external sources.
 _Avoid_: recall, rebuild (as the command name)
 
-**Dig**:
-Optional scan of external signals (git, GitHub PRs, boards) to propose backfill candidates. Never required for capture.
+**Scan**:
+Optional look through external signals (git, GitHub PRs, boards) to propose backfill candidates. Never required for capture.
 _Avoid_: Required integration, auto-save from tools

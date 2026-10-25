@@ -3,13 +3,13 @@ name: brag-docs
 description: >-
   Brag document. Use when the user wants to set up brag docs, capture a win
   into their brag document, or backfill a time range of accomplishments.
-  Optional dig on backfill; markdown, Notion, or chat-only store.
+  Optional scan on backfill; markdown, Notion, or chat-only store.
 license: MIT
 ---
 
 # Brag docs
 
-Help one person maintain a **Brag document** — a durable, evidence-backed record of accomplishments. **Store** and **Dig** preferences live in **config**; the same skill fits markdown, Notion, or chat-only.
+Help one person maintain a **Brag document** — a durable, evidence-backed record of accomplishments. **Store** and **Scan** preferences live in **config**; the same skill fits markdown, Notion, or chat-only.
 
 ## 1. Before anything else
 
@@ -24,19 +24,19 @@ User config stays on their machine. Credentials and tokens stay out of chat and 
 
 | Rule | Criterion |
 |---|---|
-| **Entry** | Draft **Entries** (see `GLOSSARY.md` and `references/evidence-and-categories.md`). Use user- or dig-sourced numbers and links; otherwise `(evidence needed)`. |
+| **Entry** | Draft **Entries** (see `GLOSSARY.md` and `references/evidence-and-categories.md`). Use user- or scan-sourced numbers and links; otherwise `(evidence needed)`. |
 | **Append-only** | Append to the configured **Store**; edit existing lines only when the user asks. |
 | **Preview** | Before any write: show drafts with evidence gaps; wait for explicit **yes**. Anything other than yes leaves the store unchanged. |
-| **Dig** | **Dig** is for **brag-backfill** only when tools exist and config/user allow it. Confirm time range and sources before scanning. |
+| **Scan** | **Scan** is for **brag-backfill** only when tools exist and config/user allow it. Confirm time range and sources before scanning. |
 | **Write footer** | After a write: what was appended, where, one next step. Chat-only: paste instructions only. |
 
 ## 3. Workflows
 
 | When | Open |
 |---|---|
-| Set up brag docs; config missing; store or dig preferences changed | `workflows/brag-setup.md` |
+| Set up brag docs; config missing; store or scan preferences changed | `workflows/brag-setup.md` |
 | Capture a win; turn notes into **Entries** | `workflows/brag-capture.md` |
-| Backfill a time range; optional dig then interview | `workflows/brag-backfill.md` |
+| Backfill a time range; optional scan then interview | `workflows/brag-backfill.md` |
 
 ## 4. Reference
 

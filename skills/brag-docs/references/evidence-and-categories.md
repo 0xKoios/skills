@@ -4,7 +4,7 @@ Use when drafting **Entries** for **brag-capture** or **brag-backfill**. An **En
 
 ## Evidence ladder
 
-Prefer the strongest evidence available. Use user- or dig-sourced numbers and links; otherwise `(evidence needed)`.
+Prefer the strongest evidence available. Use user- or scan-sourced numbers and links; otherwise `(evidence needed)`.
 
 | Rank | Kind | Examples |
 |---|---|---|

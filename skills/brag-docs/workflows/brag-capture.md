@@ -2,7 +2,7 @@
 
 Goal: turn fresh notes or a short interview into one or more **Entries** and persist them to the configured **Store** (or paste when chat-only). How: read `~/.config/brag-docs/config.md`; shape drafts with `../references/evidence-and-categories.md`.
 
-**Dig** is not used here — only user notes and interview.
+**Scan** is not used here — only user notes and interview.
 
 ## Before intake
 
