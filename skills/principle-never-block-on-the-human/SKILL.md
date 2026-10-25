@@ -11,7 +11,8 @@ For reversible work, decide, do it, and show the result. Don't ask "should I do 
 **Why:** The human supervises asynchronously. A question about a reversible step stalls the work for something a review comment could fix, while a wrong reversible choice costs only a revert.
 
 **Pattern:**
-- **Proceed, then present.** Make the change, run the relevant check, and report what you did and why.- **Know what counts as reversible:** local, reviewable changes such as editing code, renaming, writing tests or notes, and splitting tasks. Force-pushing, deleting data, writing to production, sending messages, spending money, or anything that leaves the session is not.
+- **Proceed, then present.** Make the change, run the relevant check, and report what you did and why.
+- **Know what counts as reversible:** local, reviewable changes such as editing code, renaming, writing tests or notes, and splitting tasks. Force-pushing, deleting data, writing to production, sending messages, spending money, or anything that leaves the session is not.
 - **Look it up instead of asking.** Facts in the code, docs, or history are yours to find.
 - **Ask only about direction.** Product direction comes from the human. When a choice changes what gets built, ask one question. Execution itself doesn't block.
 - **Note problems and keep going.** Log what you noticed and fix it in the next round instead of stopping.
