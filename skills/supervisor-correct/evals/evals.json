@@ -1,0 +1,19 @@
+{
+  "skill_name": "supervisor-correct",
+  "evals": [
+    {
+      "id": "correct-proposes-levels",
+      "prompt": "/supervisor-correct the review notes are in review-notes.md",
+      "should_trigger": true,
+      "expected_output": "The two repeated mistake classes (SELECT * and hard-coded dates) with their evidence, an enforcement level for each with the reason a higher level doesn't work, and a proposal that waits for approval with nothing applied.",
+      "files": [
+        "evals/files/review-notes.md"
+      ],
+      "assertions": [
+        "Groups the two mistake classes.",
+        "Picks an enforcement level per class (architecture, types, lint, test, or docs) and says why a higher level doesn't work.",
+        "Proposes changes and waits for approval without applying them."
+      ]
+    }
+  ]
+}
