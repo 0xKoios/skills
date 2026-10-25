@@ -1,0 +1,24 @@
+{
+  "skill_name": "supervisor-reflect",
+  "evals": [
+    {
+      "id": "reflect-waits",
+      "prompt": "/supervisor-reflect the transcript is session.md",
+      "should_trigger": true,
+      "expected_output": "Accepted, Rejected and Backlog lists that route the no-recap learning to a specific skill file, then a request for approval with no edits made.",
+      "files": [
+        "evals/files/session.md"
+      ],
+      "checks": [
+        { "type": "output_matches", "pattern": "Accepted" },
+        { "type": "output_matches", "pattern": "Rejected" },
+        { "type": "output_matches", "pattern": "Backlog" }
+      ],
+      "assertions": [
+        "Presents Accepted, Rejected and Backlog lists.",
+        "Routes the recap learning to a specific skill file.",
+        "Waits for approval and edits nothing."
+      ]
+    }
+  ]
+}
