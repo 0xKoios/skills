@@ -10,7 +10,7 @@ A seam is the public boundary a test observes behavior through, without reaching
 2. **Agree on them with the user, one question at a time:** "Should the parser's public `parse()` be the seam, since it catches every format bug but misses the file reader?" You can't test everything, and agreed seams put the effort on the paths that matter.
 3. **Write no test at an unagreed seam.**
 
-For data work, the data seams are listed in the data-change playbook.
+For data work, the data seams are listed in `../playbooks/data-change.md`.
 
 ## Vertical slices
 

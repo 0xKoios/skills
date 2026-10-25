@@ -22,7 +22,7 @@ Ways to build it, roughly in this order:
 8. **Bisect.** When the bug appeared between two known states (commits, versions, datasets), script the check and run `git bisect run`.
 9. **Differential.** Run the same input through the old and new version, or two configs, and diff the output.
 
-For a bug in data (wrong numbers, missing or duplicated rows), use the data repro methods in the data-change playbook.
+For a bug in data (wrong numbers, missing or duplicated rows), use the data repro methods in `../playbooks/data-change.md`.
 
 **Tighten it.** Make it faster (narrow scope, skip unrelated setup), sharper (assert the exact symptom, not "didn't crash"), and deterministic (pin time, seed randomness, isolate the filesystem). A slow, flaky loop wastes every later step.
 
