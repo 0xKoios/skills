@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": "one-wave",
-      "prompt": "/principle-migrate-callers-then-delete-legacy-apis add a new send_email_v2 and keep send_email around",
+      "prompt": "/principle-migrate-callers-then-delete-legacy-apis add a new send_email_v2 that accepts a list of recipients, and keep send_email around",
       "expected_output": "Every internal caller moves to the new API and send_email is deleted in the same change.",
       "files": [
         "evals/files/mailer.py",
