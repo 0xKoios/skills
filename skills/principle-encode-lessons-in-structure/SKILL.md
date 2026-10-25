@@ -6,14 +6,13 @@ disable-model-invocation: true
 
 # Encode Lessons in Structure
 
-When a lesson repeats, turn it into structure: a lint rule, a CI or pre-commit check, a type, a runtime assertion, or a script. Make its error message name the fix. Add more instructions only when the rule needs judgment that no check can make.
+The second time you write or say the same rule, stop writing prose and turn it into structure: a lint rule, a CI or pre-commit check, a type, a runtime assertion, or a script. Make its error message name the fix. Add more instructions only when the rule needs judgment that no check can make.
 
 **Why:** Instructions get skimmed, forgotten, and diluted as the doc grows. A check fires every time, for every agent and every person, and nobody has to remember it.
 
 **Pattern:**
-- **The repeat is the trigger.** The second time you write or say the rule, stop writing prose and build the check.
-- **Pick the cheapest enforcer.** Use an existing linter rule first (ruff's `T20` bans `print`, ESLint has `no-console`), then a grep in CI or a pre-commit hook, then a type or runtime check.
-- **Make the error teach.** The message names the fix, such as "use logger.info, not print, in library code", so whoever hits it corrects course without reading docs.
+- **Pick the cheapest enforcer whose error teaches.** The message must name the fix, such as "use logger.info, not print, in library code", so whoever hits it corrects course without reading docs.
+- **Check the stock message.** A built-in rule often doesn't name the fix: ruff's `T201` says only "`print` found". Then use a rule that takes a custom message (ESLint's `no-restricted-syntax`, a pre-commit `pygrep` hook, a CI grep that prints the fix), or a type or runtime check that raises it.
 - **Scope it to where the rule holds,** such as library code but not scripts or tests, so the check never fires on valid code and gets ignored.
 - **Delete the instruction once the check exists.** The instruction was the symptom, and keeping both splits the source of truth.
 - **When it can't be encoded,** make the instruction prominent and add an example of the failure.
