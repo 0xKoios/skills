@@ -26,22 +26,16 @@ Skip the run when the session is trivial, off-topic, or already handled by a ski
    With a subagent tool, spawn all three in one message, so they run in parallel and their contexts stay out of yours. Give each a pointer brief: the lens file path, the transcript path, the used-skills list, and an output path for its findings. Use the harness default model. Without a subagent tool, read each lens file and run it yourself, one after another, writing each lens's findings to its own file.
 5. **Synthesize.** Follow `references/synthesizer.md` with the three findings files. Use a subagent when you have one. Otherwise do it yourself. The result is three lists: Accepted, Rejected, Backlog.
 6. **Check structure.** Move any Accepted row that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog (`../principle-encode-lessons-in-structure/SKILL.md`). Skill prose is for what mechanisms can't enforce.
-7. **Present the lists and stop.** Show Accepted, Rejected and Backlog in full. For each Accepted row show the target skill file, the section, and the intended change. Ask the user which rows to apply. The user may drop rows or redirect a routing. Edit nothing yet.
-8. **Apply each approved row** per `../supervisor/references/corrections.md`, starting at its step 3. That means:
-   - Edit the file in the user's clone of `0xKoios/skills`, never only the installed copy.
-   - Show the diff and a new eval case for that skill's `evals/evals.json`, and run the case.
-   - Commit on a `correction/<skill>-<short-slug>` branch.
-   - Never push. The user reviews and pushes.
-9. **Route by size.**
-   - A one-line bullet, a tightened sentence, or a corrected fact: edit directly.
-   - A new section, a new table, or more than about 10 lines: follow `../supervisor/playbooks/authoring-a-skill.md`.
-   - A skill that existed but didn't fire (`tune description`): edit its description and add a case whose prompt should trigger it.
-   - A new skill: also `../supervisor/playbooks/authoring-a-skill.md`. Propose it in one line first.
+7. **Present the lists and stop.** Show Accepted, Rejected and Backlog in full. For each Accepted row show the target skill file, the section, and the intended change. Ask the user which rows to select. The user may drop rows or redirect a routing. Selecting a row only chooses it for proposal and never authorizes an edit, because the user hasn't yet seen the diff. Edit nothing yet.
+8. **Route each selected row by size, before drafting any edit.**
+   - A new skill, a new section, a new table, or more than about 10 lines: hand the row to `../supervisor/playbooks/authoring-a-skill.md` and skip step 9 for it.
+   - Anything smaller, including a one-line bullet, a corrected fact, or a `tune description` row (add a case whose prompt should trigger the skill): continue to step 9.
+9. **Follow `../supervisor/references/corrections.md` from its step 3 onward for each remaining row.** It finds the clone, then shows the path, the diff and the new eval case, and waits for an explicit yes on that diff. It then applies the edit in the clone, runs `scripts/eval-skill.sh <skill> <agent> --case <id> --trials 3`, handles a FAIL or an exit 2, commits on its branch only as its rules allow, and never pushes. Don't restate or shortcut its rules, because a paraphrase drifts from the source.
 10. **Run `bash scripts/check-skill.sh`** in the clone after the edits. Fix what it reports.
 
 ## Gates
 
-- The Accepted list always waits for approval. A "just do it all" before you have shown the list is not approval of rows the user hasn't seen.
+- Approving a row selects it for proposal and never authorizes an edit by itself. Only an explicit yes on the shown diff does, per the corrections flow. A "just do it all" given before you've shown the list isn't approval, because it covers rows the user hasn't seen.
 - Backlog items are listed in the reply only. There's no tracker. Each gets the pattern, what was hit, and the suggested mechanism.
 - Escalation follows the router's Escalation section (`../supervisor/SKILL.md`). A lens that stalls after 3 rounds with no new evidence gets one rerun on the harness's strongest model, then goes to the user.
 
