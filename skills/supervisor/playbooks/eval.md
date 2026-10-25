@@ -12,16 +12,17 @@ A candidate that knows it is being watched behaves differently, so the run is bl
 - The judge sees outputs by sanitized label only, never a model name.
 - When comparing two variants, one judge scores both sets in a single pass on one scale, blind to which set each came from.
 
-**Subagents:** Candidates in step 4 and the judge in step 5 are fresh subagents with pointer briefs (a workspace path and the prompt file). Steps 1 to 3 and 6 to 8 stay in the main chat. Without a subagent tool, take the sequential path in step 4.
+**Subagents:** Candidates in step 5 and the judge in step 6 are fresh subagents with pointer briefs (a workspace path and the prompt file). Steps 1 to 4 and 7 to 9 stay in the main chat. Without a subagent tool, take the sequential path in step 5.
 
-1. State the variant under test and what behavior counts as success. Write a rubric of 3 to 6 concrete criteria for the judge only. Never put it where a candidate can read it.
-2. Set up one sanitized workspace per candidate, with the variant installed. Plant the context an organic task would have, such as a project skeleton and the skills the agent would read.
-3. Write one organic prompt, the way a user would type it. Write it to a file in the main chat only.
-4. Run N candidates, 3 or more, on different models where the harness allows it. Give each its own workspace and the same prompt. Without subagents, run them one after another with `scripts/eval-skill.sh <skill> <agent> --trials N`, and run the same cases again with `--baseline` so the variant has something to beat.
-5. Run one blind judge on a different model than the candidates, where the harness allows it. Give it the rubric and the outputs by sanitized label. With no second model, state that the judge shares a model with the candidates, because that weakens the verdict.
-6. Verify the chain from transcripts, not self-report. Read each candidate's transcript from this workspace's own transcript folder (see your harness adapter), never other projects'. Note which files each candidate actually opened.
-7. Read every candidate's output end to end yourself. Compare it with the judge's verdict. A disagreement means the judge is biased or the rubric is ambiguous, so say which.
-8. Recommend promoting the variant or not, with the evidence. A promotion changes a skill file, so it goes to the user as a diff (see **Corrections** in the router).
+1. State the variant under test and what behavior counts as success.
+2. Write a rubric of 3 to 6 concrete criteria for the judge only. Never put it where a candidate can read it.
+3. Set up one sanitized workspace per candidate, with the variant installed. Plant the context an organic task would have, such as a project skeleton and the skills the agent would read.
+4. Write one organic prompt, the way a user would type it, to a file only the main chat reads.
+5. Run N candidates, 3 or more, on different models where the harness allows it. Give each its own workspace and the same prompt. Without subagents, run them one after another with `scripts/eval-skill.sh <skill> <agent> --trials N --baseline`, so the variant has something to beat.
+6. Run one blind judge on a different model than the candidates, where the harness allows it. Give it the rubric and the outputs by sanitized label. With no second model, state that the judge shares a model with the candidates, because that weakens the verdict.
+7. Verify the chain from transcripts, not self-report. Read each candidate's transcript from this workspace's own transcript folder (see your harness adapter), never other projects'. Note which files each candidate actually opened.
+8. Read every candidate's output end to end yourself. Compare it with the judge's verdict. A disagreement means the judge is biased or the rubric is ambiguous, so say which.
+9. Recommend promoting the variant or not, with the evidence. A promotion changes a skill file, so it goes to the user as a diff (see **Corrections** in the router).
 
 **Reply:** the variant under test, the rubric, per-candidate notes, the judge's verdict, your synthesis, and a recommendation on promoting the variant.
 
