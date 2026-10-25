@@ -9,7 +9,7 @@
         "evals/files/api.py"
       ],
       "assertions": [
-        "Moves validation to the request boundary and removes the internal re-checks."
+        "Proposes moving validation to the request boundary and removing the internal re-checks."
       ]
     }
   ]

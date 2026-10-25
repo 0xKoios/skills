@@ -12,13 +12,12 @@ When a new internal API replaces an old one, move every caller to the new one an
 
 **Pattern:**
 - **Find every caller first.** Search the code, then let the type checker or a failing import confirm you caught them all.
-- **Migrate in one wave.** Use a codemod or script when there are more than a few call sites, per `../principle-build-the-lever/SKILL.md`.
-- **Delete the old API in the same change,** along with its shims, aliases, and dead config. Nothing is left to call by accident.
-- **Move the tests to the new contract.** Delete tests that only protected the old internals.
-- **Take back the plain name.** Once the old one is gone, a `_v2` suffix has no reason to exist.
+- **Migrate in one wave, in the change that adds the new API.** Add the new function, move every caller to it, and do it now rather than proposing it. When the new behavior isn't specified yet, keep the old contract in the new function and say what's still open. Use a codemod or script when there are more than a few call sites, per `../principle-build-the-lever/SKILL.md`.
+- **Delete the old API in the same change,** along with its shims, aliases, and dead config. Delete it rather than rewriting it in place, so the diff shows no caller left behind.
+- **Move the tests to the new contract.** Delete tests that only protected the old internals. Renaming the new API back to the plain name is a later, separate change.
 - **Check the precondition.** This applies when no external users depend on the old API. A published library, public endpoint, or another team's service gets a versioned deprecation instead, and you say so.
 
 **Not this:**
 - Adding `send_email_v2`, leaving 14 callers on `send_email` "for now", and a TODO to migrate them later.
 
-<!-- Adapted from pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: migrate callers and delete the old API in one wave, move tests to the new contract, the no-external-users precondition. Changed: wrote the missing rule, Why and steps (find callers, codemod, delete shims, reclaim the name), and an external-users fallback. -->
+<!-- Adapted from pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: migrate callers and delete the old API in one wave, move tests to the new contract, the no-external-users precondition. Changed: wrote the missing rule, Why and steps (find callers, migrate now in one wave, delete rather than rewrite in place, rename later), and an external-users fallback. -->
