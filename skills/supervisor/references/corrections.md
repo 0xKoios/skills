@@ -8,6 +8,8 @@ When the user corrects you ("no, don't do that", "that's wrong, we always..."), 
 2. **Name the file that caused the mistake.**
    - A skill file (the router, a playbook, a reference, a principle leaf) when its instructions led you there.
    - The work repo's **AGENTS.md** when the correction is a fact about that project, such as a naming rule or a table owner.
+
+   To choose, ask whether the rule would hold in any repo. If it would, it's a skill correction. If it's a convention or fact true only of this repo, it goes in **AGENTS.md**. When unsure, the proposal says which one you chose and why, so the user can redirect it.
 3. **Find the clone (skill-file corrections only).** An approved skill edit goes in the user's clone of `0xKoios/skills`, never only in the installed copy, because the next install overwrites the installed copy. For an **AGENTS.md** correction, skip this step: the file shown and edited is the work repo's.
    1. Run `realpath` on the installed skill file.
    2. If the result is inside a git repo whose remote matches `0xKoios/skills` (check `git -C <dir> remote -v`), use that repo's top level (`git -C <dir> rev-parse --show-toplevel`).

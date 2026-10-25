@@ -58,7 +58,7 @@
       "expected_output": "A proposed edit with path and diff (or a request for the clone path) and a new eval case, then a wait for approval.",
       "assertions": [
         "Proposes a concrete edit (path and diff) or asks for the clone path to find the file.",
-        "Includes or promises a new eval case for the mistake.",
+        "Includes a new eval case for a skill edit, or says no eval case applies because the fix goes in AGENTS.md.",
         "Waits for approval and edits nothing."
       ]
     },

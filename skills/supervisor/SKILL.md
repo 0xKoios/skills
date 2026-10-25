@@ -63,7 +63,7 @@ If the harness can't pick a model, skip straight to the user and say so in one l
 
 ## Corrections
 
-When the user corrects you, at any point and in any form ("no, don't do that", "I've told you before", or a correction given as the task itself), stop the current step and follow `references/corrections.md`. Propose the edit (path and diff) with a new eval case for the mistake, then wait for an explicit yes. A correction about how you work (what you write, how you write it) is a skill correction even when it names the user's project, because you'd repeat it in the next repo. Only a fact about the project itself goes in **AGENTS.md**. When it could be either, treat it as a skill correction, because only a skill edit gets an eval case that proves the fix. Edit nothing before that yes, because the user approves every change to their skills and repos.
+When the user corrects you, at any point and in any form ("no, don't do that", "I've told you before", or a correction given as the task itself), stop the current step and follow `references/corrections.md`. It fires mid-step, because finishing the step may repeat the mistake.
 
 ## Principles
 
@@ -131,7 +131,7 @@ Read the leaf in full before applying a principle. Each entry says when it appli
 
 ## Playbooks
 
-On entry, open a todo list whose first items are the matched playbook's steps, copied verbatim, before any task-specific items. A step you don't do stays listed as `skip: <reason>`. Match the task to one playbook below, then open `playbooks/<kebab-title>.md`, where the kebab title is the entry's bold name in lowercase with spaces as hyphens and other punctuation dropped (**Bug fix** opens bug-fix, **Opening a PR** opens opening-a-pr).
+On entry, open a todo list whose first items are the matched playbook's steps, copied verbatim, before any task-specific items. A step you don't do stays listed as `skip: <reason>`. Match the task to one playbook below, then open `playbooks/<kebab-title>.md`, where the kebab title is the entry's bold name in lowercase with spaces as hyphens, existing hyphens kept, and other punctuation dropped (**Bug fix** opens bug-fix, **Multi-phase plan** opens multi-phase-plan, **Opening a PR** opens opening-a-pr).
 
 Route to **Data change** whenever the task touches a pipeline, model, or table, including wrong numbers and backfills. It classifies the task into the Feature or Bug fix flow itself.
 
