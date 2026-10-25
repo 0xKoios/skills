@@ -11,13 +11,13 @@ The second time you write or say the same rule, stop writing prose and turn it i
 **Why:** Instructions get skimmed, forgotten, and diluted as the doc grows. A check fires every time, for every agent and every person, and nobody has to remember it.
 
 **Pattern:**
-- **Pick the cheapest enforcer whose error teaches.** The message must name the fix, such as "use logger.info, not print, in library code", so whoever hits it corrects course without reading docs.
-- **Check the stock message.** A built-in rule often doesn't name the fix: ruff's `T201` says only "`print` found". Then use a rule that takes a custom message (ESLint's `no-restricted-syntax`, a pre-commit `pygrep` hook, a CI grep that prints the fix), or a type or runtime check that raises it.
+- **Pick the cheapest enforcer whose error teaches.** The message must name the fix, such as "pass timeout=, for example requests.get(url, timeout=10)", so whoever hits it corrects course without reading docs.
+- **Check the stock message.** A built-in rule often doesn't name the fix: ruff's `S113` says only "Probable use of `requests` call without timeout". Then use a rule that takes a custom message (ESLint's `no-restricted-syntax`, a pre-commit `pygrep` hook, a CI grep that prints the fix), or a type or runtime check that raises it.
 - **Scope it to where the rule holds,** such as library code but not scripts or tests, so the check never fires on valid code and gets ignored.
 - **Delete the instruction once the check exists.** The instruction was the symptom, and keeping both splits the source of truth.
 - **When it can't be encoded,** make the instruction prominent and add an example of the failure.
 
 **Not this:**
-- Adding a fourth bolded "NEVER use print()" line to the agent instructions file.
+- Adding a fourth bolded "ALWAYS set a timeout on HTTP calls" line to the agent instructions file.
 
-<!-- Adapted from pstack/skills/principle-encode-lessons-in-structure/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: encode a repeated instruction as structure, the instruction is the symptom, the judgment-needed fallback. Changed: wrote the rule, Why and steps (cheapest enforcer, error names the fix, scope it), and the print() example. -->
+<!-- Adapted from pstack/skills/principle-encode-lessons-in-structure/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: encode a repeated instruction as structure, the instruction is the symptom, the judgment-needed fallback. Changed: wrote the rule, Why and steps (cheapest enforcer, error names the fix, scope it), and the HTTP-timeout example. -->

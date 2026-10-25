@@ -19,6 +19,6 @@ Before you call a task done, check the real output directly. Run the changed cod
 - **Suspect the observation first.** When a check fails, rule out the check itself before blaming the system.
 
 **Not this:**
-- "The tests compile, so `parse.py` is done," or "all 12 cases pass" with no run in the session to back it.
+- "The migration ran without errors, so the table is backfilled," or "all 12 cases pass" with no run in the session to back it.
 
 <!-- Adapted from pstack/skills/principle-prove-it-works/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: check the real thing not a proxy, read the actual value, suspect the observation method, script the check and keep its output. Changed: added the user's Evidence over Assertion rule (no invented results, every claim traced to this session), the compiling-is-not-proof bullet, dropped the show-me-your-work skill reference. -->

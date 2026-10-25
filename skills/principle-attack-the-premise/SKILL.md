@@ -11,13 +11,13 @@ When two or more fixes built on the same belief have failed the same check, susp
 **Why:** Each failed fix is evidence against the premise it assumed. A third fix on the same premise spends effort where the evidence already says the cause isn't.
 
 **Pattern:**
-- **Write the premise down.** It is the one sentence every failed fix assumed, for example "the cache is serving stale data".
-- **Test it directly.** Find an observation that would come out differently if the premise were false, and make it. For a stale cache: bypass the cache and see whether the bug persists, or log the cached value's age next to the source value. Look at how the failures are distributed, not only how big they are.
+- **Write the premise down.** It is the one sentence every failed fix assumed, for example "the memory leak is in the image decoder".
+- **Test it directly.** Find an observation that would come out differently if the premise were false, and make it. For a suspected decoder leak: run the same load with decoding stubbed out and see whether memory still grows, or diff two heap snapshots. Look at how the failures are distributed, not only how big they are.
 - **Make the test rerunnable.** A small script beats a one-off manual check, per `../principle-build-the-lever/SKILL.md`.
 - **Follow the evidence.** If it contradicts the premise, the cause is elsewhere: look for what the failures share that the premise didn't predict. If it confirms the premise, ask the next "why" (Fix Root Causes), because the earlier fixes may have treated a symptom.
 - **Remove the condition instead of compensating for it.** A cleanup step that runs after the cause leaves the cause in place and adds work on every run, per `../principle-laziness-protocol/SKILL.md`.
 
 **Not this:**
-- Trying a third cache-invalidation tweak because "it must be the cache".
+- Trying a third buffer-pool tweak in the decoder because "it must be the decoder".
 
-<!-- Adapted from pstack/skills/principle-attack-the-premise/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: suspect the shared premise, write it down, test it directly, follow the evidence, remove the condition. Changed: "gate" became "check", added a stale-cache example and a Not this, and linked only leaves in this set. -->
+<!-- Adapted from pstack/skills/principle-attack-the-premise/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: suspect the shared premise, write it down, test it directly, follow the evidence, remove the condition. Changed: "gate" became "check", added a memory-leak example and a Not this, and linked only leaves in this set. -->

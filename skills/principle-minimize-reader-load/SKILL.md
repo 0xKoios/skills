@@ -19,6 +19,6 @@ Maintainability is the work a reader must do to understand the code. Measure it 
 - **Run the 30-second test.** A new reader should answer "where does X come from?" and "what can change X?" in under 30 seconds. Add a layer or piece of state only if it removes at least as much load elsewhere.
 
 **Not this:**
-- Keeping a repository adapter and two one-line helpers "for flexibility" when one service method is their only caller.
+- Keeping a `ClientFactory`, a `ClientProvider`, and a `get_client()` helper "for flexibility" when one function creates the only HTTP client.
 
 <!-- Adapted from pstack/skills/principle-minimize-reader-load/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: the two axes, collapse one-caller layers, interface compression, shrink state scope, the 30-second test. Changed: tightened the prose, added Why and a Not this, and dropped the context-window cross-link. -->

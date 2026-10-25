@@ -19,6 +19,6 @@ Design every state-changing operation to converge on the correct state, however 
 - **Test it.** Run it twice on the same input and assert the output is identical.
 
 **Not this:**
-- A daily load that inserts the day's rows with no delete or merge, so a retry after a timeout doubles that day's revenue.
+- A webhook handler that inserts a charge for every delivery it receives, so the provider's automatic retry bills the customer twice.
 
 <!-- Adapted from pstack/skills/principle-make-operations-idempotent/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: converge regardless of prior partial runs, derive steps from existing state, stale-leftover evidence, temp-and-rename, the three-question test. Changed: added the user's rule that reruns and past-date runs converge, the replace-not-append and date-as-input bullets, and a run-twice test. -->

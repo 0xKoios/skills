@@ -12,12 +12,12 @@ When a decision has no precedent in the codebase, don't commit to the first desi
 
 **Pattern:**
 - **Write the criteria first.** Name what matters before sketching, for example correctness under failure, latency, complexity, and ease of operating it. That keeps the comparison honest.
-- **Make the sketches differ in kind.** For a sync protocol: push events versus periodic pull with cursors versus a shared log. Variations of one idea don't count.
+- **Make the sketches differ in kind.** For a rate limiter: a token bucket in each process versus a central counter in a shared store versus a limiter at the proxy. Variations of one idea don't count.
 - **Keep each sketch throwaway.** Each is a short design note or a small prototype, built through the Prototype playbook or one subagent per sketch.
-- **Compare side by side.** Score each sketch against the criteria and run the riskiest scenario through all of them, such as a dropped message, a duplicate, or both sides writing at once.
+- **Compare side by side.** Score each sketch against the criteria and run the riskiest scenario through all of them, such as a traffic burst, a node restart, or the shared store going down.
 - **Commit and record why.** Choose one, note why the others lost, and delete the throwaway code.
 
 **Not this:**
-- Building the first protocol idea all the way to production and finding its failure mode in an incident.
+- Building the first rate-limiter idea all the way to production and finding its failure mode in an incident.
 
-<!-- Adapted from pstack/skills/principle-exhaust-the-design-space/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: 2 or 3 competing prototypes compared side by side for novel decisions, including ones that depend on feel. Changed: dropped arena, builds sketches through the Prototype playbook or subagents, and added criteria-first, differ-in-kind, and a sync-protocol example. -->
+<!-- Adapted from pstack/skills/principle-exhaust-the-design-space/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: 2 or 3 competing prototypes compared side by side for novel decisions, including ones that depend on feel. Changed: dropped arena, builds sketches through the Prototype playbook or subagents, and added criteria-first, differ-in-kind, and a rate-limiter example. -->

@@ -12,13 +12,13 @@ When implementation convenience conflicts with the experience of whoever uses th
 
 **Pattern:**
 - **Start from the user's first run.** Describe what they type, what happens, and what they see when it goes wrong, before choosing the implementation.
-- **Default sensibly.** It should work with zero setup. Make configuration optional and layered: defaults, then a config file if present, then env vars and flags.
+- **Default sensibly.** It should work with zero setup. Make every setting optional, with a default that suits the common case and an override for the rest.
 - **Justify every option and control.** Each one is a decision you push onto the user.
 - **Ship less, ship better.** Three polished features beat ten rough ones. Every feature serves the core loop or gets out of the way.
 - **Get the details right.** Clear errors that say what to do next, helpful output, and consistent naming.
 - **Prototype when feel matters.** A throwaway sketch is cheaper than a production rewrite.
 
 **Not this:**
-- Requiring a config file before the first command works because parsing defaults is more code for us.
+- Making every caller of a library pass a connection pool and a retry policy because building sensible defaults is more work for us.
 
-<!-- Adapted from pstack/skills/principle-experience-first/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: delight over convenience, justify every option, ship less ship better, the broad definition of the user. Changed: generalized beyond UI to CLIs and APIs, added Why, first-run and sensible-defaults patterns, and a CLI example. -->
+<!-- Adapted from pstack/skills/principle-experience-first/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: delight over convenience, justify every option, ship less ship better, the broad definition of the user. Changed: generalized beyond UI to CLIs and APIs, added Why, first-run and sensible-defaults patterns, and a library example. -->

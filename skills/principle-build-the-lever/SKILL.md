@@ -19,6 +19,6 @@ When the work isn't trivial, build the tool that does it instead of doing it by 
 - **Commit the lever** when the work outlives the session. Keep it small, a script and never a framework, per `../principle-laziness-protocol/SKILL.md`.
 
 **Not this:**
-- Editing 40 files by hand, or fixing a server setting in the cloud console, and asking the reviewer to trust that every spot was covered.
+- Updating the license header in 60 files by hand, or fixing a server setting in the cloud console, and asking the reviewer to trust that every spot was covered.
 
 <!-- Adapted from pstack/skills/principle-build-the-lever/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: build the tool for non-trivial work, first unit by hand then prove by rerun, rerun-safe, one pass beats fan-out, the cite-means-a-file test. Changed: added IaC and no hand edits to environments, dropped the delegate-skill and sqlite specifics and the cross-links outside this set. -->

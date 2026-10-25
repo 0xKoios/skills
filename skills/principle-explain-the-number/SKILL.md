@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Before a number goes in a PR, report, or decision, know where it came from and what limits it. A number you can't trace to a measurement made or read this session is an assertion, so don't write it down as a fact.
 
-**Why:** "3x faster" often measures a warm cache, a skipped step, a smaller input, or noise. A wrong number in a PR misleads every reader after you, and nobody can check it without its evidence.
+**Why:** "p99 latency down 40%" often measures a warm cache, a skipped step, a smaller input, or noise. A wrong number in a PR misleads every reader after you, and nobody can check it without its evidence.
 
 **Pattern:**
 - **Trace it first.** Name the run behind it: the command, the input, and the run count. If the user supplied the number and no measurement exists, run one or ask for it before repeating it.
@@ -19,7 +19,7 @@ Before a number goes in a PR, report, or decision, know where it came from and w
 - **Apply it to eval results too.** Did every trial do the task, and does the gap hold across trials and models?
 
 **Not this:**
-- Writing "3x faster" in the PR from one cold run before and one warm run after.
+- Putting "p99 latency down 40%" in the release notes from one cold run before and one warm run after.
 
 This checks what a number means. `../principle-prove-it-works/SKILL.md` checks that an output is real.
 

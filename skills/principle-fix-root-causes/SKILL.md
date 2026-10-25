@@ -12,13 +12,13 @@ Fix the fault, not the place where it showed up. The symptom is where a wrong st
 
 **Pattern:**
 - **Reproduce first,** then trace backward. Ask "why" at each step until the answer is a wrong decision in the code, not a consequence of an earlier one.
-- **Instrument, don't guess.** Read the actual error and the actual state at each step. Find where the bad value first appears, such as the join that drops rows or the parse that returns nothing.
-- **Ask whether the state is legitimate.** If the system may be in that state, the code that broke on it is the root cause, and handling it there is the fix. If the state should never exist, a check where it broke hides the bug. Defaults, coalesces, retries, swallowed errors, and clamped values are the usual masks.
+- **Instrument, don't guess.** Read the actual error and the actual state at each step. Find where the bad value first appears, such as the serializer that drops a field or the cache that returns an old entry.
+- **Ask whether the state is legitimate.** If the system may be in that state, the code that broke on it is the root cause, and handling it there is the fix. If the state should never exist, a check where it broke hides the bug. Fallback defaults, retries, swallowed errors, and clamped values are the usual masks.
 - **Suspect persisted state** when something fails only after a restart: config files, caches, lock files, and serialized state.
 - **Fix the pattern, not the instance.** Find every place with the same fault and fix them all.
 - **Leave a signal.** If the deciding fact took a deep dig, propose the cheap, always-on check or log line that would have shown it at first look.
 
 **Not this:**
-- Wrapping a report's totals in `COALESCE(total, 0)` when the nulls come from an upstream join that drops unmatched rows, so the report now shows a confident wrong zero.
+- Catching the `KeyError` in a dashboard and showing "n/a" when an upstream serializer drops fields whose value is empty, so every other reader of that payload still breaks.
 
-<!-- Adapted from pstack/skills/principle-fix-root-causes/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: symptom vs root cause, reproduce and ask why, instrument, the legitimate-state test, persisted state after restarts, fix the pattern, the always-on signal. Changed: merged eight bullets into six, added coalesce and defaults to the masks and a Not this, dropped the paragraph-long-comment line. -->
+<!-- Adapted from pstack/skills/principle-fix-root-causes/SKILL.md (cursor/plugins, MIT, Lauren Tan). Took: symptom vs root cause, reproduce and ask why, instrument, the legitimate-state test, persisted state after restarts, fix the pattern, the always-on signal. Changed: merged eight bullets into six, added fallback defaults to the masks and a Not this, dropped the paragraph-long-comment line. -->

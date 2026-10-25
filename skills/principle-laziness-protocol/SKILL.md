@@ -12,13 +12,13 @@ Write the minimum code that solves the stated problem. Build what was asked and 
 
 **Pattern:**
 - **Smallest diff wins.** Fewer plain lines beat elegant boilerplate. If 200 lines could be 50, rewrite them as 50.
-- **Build the asked core, decline the extra.** A requested retry is a loop with a limit and a backoff inside the existing function. When the request also floats a framework "for later", build the core and decline the framework in one line with the reason: there is one case today, and the second case will show the real shape.
+- **Build the asked core, decline the extra.** A requested cache is a dict with an expiry inside the existing function. When the request also floats a framework "for later", build the core and decline the framework in one line with the reason: there is one case today, and the second case will show the real shape.
 - **No abstraction for one use.** Three similar lines beat a premature helper. Add the interface when a second implementation exists.
 - **Consolidate decisions.** If the same choice appears in several places, give it one source of truth and pass the result down as a plain value.
 - **Handle errors that can happen.** Guard real failure modes such as network, input, and missing files. Skip guards for states the code already rules out.
 - **Run the senior-engineer test.** Ask "would a senior engineer call this overcomplicated?" If yes, simplify before showing it.
 
 **Not this:**
-- Adding a strategy registry, plugin hooks, and a config flag around a three-line retry because "we might want other strategies".
+- Adding a backend registry, adapter classes, and a config flag around a ten-line in-memory cache because "we might want Redis later".
 
 <!-- Adapted from pstack/skills/principle-laziness-protocol/SKILL.md (cursor/plugins, MIT, Lauren Tan) and section 2 "Simplicity First" of the user's CLAUDE.md (0xKoios/skills, MIT, 0xKoios). Took: consolidate decisions, minimize the diff, no speculative features or abstractions, the senior-engineer test. Changed: merged the two into one rule, added Why, a decline-the-extra pattern, and a general example. -->
