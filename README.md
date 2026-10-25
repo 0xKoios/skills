@@ -12,13 +12,14 @@ Needs [Node.js](https://nodejs.org/) 22.20+.
 npx skills add 0xKoios/skills -s ado-boards -g
 ```
 
-Done when the agent lists `ado-boards`. `-g` makes it available in every project. Target agents with `-a` (e.g. `-a cursor`, or `-a '*'` / `--all`). Inventory: `npx skills add 0xKoios/skills -l`. Refresh: `npx skills update`. On Windows without symlinks, add `--copy`. Further flags: `npx skills --help`.
+Done when the agent lists `ado-boards`. Swap `-s brag-docs` (or any skill name) the same way. `-g` makes it available in every project. Target agents with `-a` (e.g. `-a cursor`, or `-a '*'` / `--all`). Inventory: `npx skills add 0xKoios/skills -l`. Refresh: `npx skills update`. On Windows without symlinks, add `--copy`. Further flags: `npx skills --help`.
 
 ## Skills
 
 | Skill | Reach for it when |
 |---|---|
 | [`ado-boards`](skills/ado-boards/) | Your Azure Boards cards — view, create under a parent, move, log time, comments, description/AC, plan my sprint. Reads free; every write previews first. |
+| [`brag-docs`](skills/brag-docs/) | Living brag document — `brag-setup`, `brag-capture`, `brag-backfill`. Markdown default; action → result → evidence; preview before write. |
 
 ## Edit a skill
 
