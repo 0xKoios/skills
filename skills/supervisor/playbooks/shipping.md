@@ -1,0 +1,19 @@
+# Shipping
+
+Verify each PR independently, land only the verified run from the root, then keep your hands off the stack. A merge is irreversible, so it goes to the user (see **Escalation** in the router). You prepare it, and the user says yes.
+
+**Subagents:** Each PR's verifier in step 1 is a fresh subagent that did not write the code, with a pointer brief (the PR number, the base and head, how to run the change). Without a subagent tool, run the verifications one after another yourself and label them as author-verified. Steps 2 to 9 stay in the main chat, because the merge decision belongs to the user.
+
+1. Verify each PR independently. Check out the parent and the head, run the change the way a user would, and post `PASS`, `PASS+NOTES`, or `FAIL` on the PR with `gh pr comment <number> --body-file <file>`. Only a verdict from an agent that did not write the code counts, because an author checks what it meant to build. Green CI and an approving review are not verdicts, because neither runs the change as a user would.
+2. Walk up from the lowest unmerged PR and stop at the first one without `PASS` or `PASS+NOTES`. The PRs below it are the run, and the top one is the ceiling. A verified PR above an unverified one waits, because it can't land without the code below it.
+3. Compare `git patch-id` at each verdict's SHA with the PR's current head, because a rebase moves a PR to a new SHA without failing any check. When the patches match, the verdict stands. When they differ, the change gets fresh checks and a fresh verdict, because the old verdict never saw it. A difference only in tests, docs, or lint config can keep a verdict if what it ran builds the same at both SHAs. Report the differing files so the user can check the call.
+4. Show the user the run, the ceiling, each PR's verdict and who produced it, and the first merge command. Wait for an explicit yes before any merge. Silence is not a yes.
+5. After the yes, merge the run's lowest unmerged PR with `gh pr merge <number> --squash`. Merge one PR at a time, bottom-up, because a PR whose base is still its parent's branch merges into that branch, not trunk. Don't arm `--auto` unless the verdict covers the PR's current head, because auto-merge lands whatever head is ready.
+6. Read the PR back with `gh pr view <number> --json state,mergedAt,baseRefName`. A landed PR reads merged. A merge command can report success when a merge queue only queued the PR, and a requested auto-merge is not a merge.
+7. Retarget the next PR onto trunk with `gh pr edit <next> --base <trunk>`. Move its patch onto the merge result, then push with `--force-with-lease`. Ask the user first when others use that branch (see **Escalation** in the router). Repeat step 3 for it, because the move changes its head.
+8. Repeat steps 4 to 7 for each PR up to the ceiling. Change nothing on the stack except step 7, because a merge lands whatever its branch and base hold at that moment. When a merge stalls, find out why with `gh pr checks` and `gh pr view` before you change anything.
+9. Stop at the ceiling. Extending the run takes new verdicts, so it starts again at step 1. A deploy after the merge follows **Escalation** too and goes to the user.
+
+**Reply:** the verified run and its ceiling, each PR's verdict and who produced it, what landed and how you confirmed it, and what the next gap needs.
+
+<!-- Adapted from pstack/skills/poteto-mode/playbooks/shipping.md (cursor/plugins, MIT, Lauren Tan). Took: independent per-PR verification by a non-author, the contiguous verified run from the root, the patch-id re-check, bottom-up merges with a read-back, retargeting the child onto trunk, and stopping at the ceiling. Changed: dropped cloud-agent verifiers, the control skills, Origin, Graphite, the queued watcher, and the loop runner; verifiers are fresh subagents; merges and deploys wait for the user's explicit yes under Escalation; split the merge, read-back, and retarget into single steps. -->

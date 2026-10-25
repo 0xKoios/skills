@@ -127,8 +127,7 @@ Read the leaf in full before applying a principle. Each entry says when it appli
 - **No recap.** Don't restate the request or play back shared understanding. Start with the result, the next question, or the refusal.
 - **Every claim carries its evidence or a label** in the same sentence: measured (with the command), inferred (from what), or guess.
 - **Terse keeps content.** Every section the playbook's **Reply:** line names stays.
-- **Link only what you made or read this session.** PR links take the form `https://github.com/<owner>/<repo>/pull/<number>`.
-
+- **Link only what you made or read this session.**
 ## Playbooks
 
 On entry, open a todo list whose first items are the matched playbook's steps, copied verbatim, before any task-specific items. A step you don't do stays listed as `skip: <reason>`. Match the task to one playbook below, then open `playbooks/<kebab-title>.md`, where the kebab title is the entry's bold name in lowercase with spaces as hyphens, existing hyphens kept, and other punctuation dropped (**Bug fix** opens bug-fix, **Multi-phase plan** opens multi-phase-plan, **Opening a PR** opens opening-a-pr).
