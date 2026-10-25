@@ -18,7 +18,7 @@ Write or edit a skill file. You own the skill's voice. A skill is read by an age
 12. Rerun them with `--baseline`. A case that still passes without the skill isn't tested by it, so propose retiring it in one line and let the user decide.
 13. For a new playbook or a rewritten skill, run **Eval**.
 14. Show the user the diff and wait for an explicit yes.
-15. Commit on a non-trunk branch after the yes. The user pushes it. Then run **Opening a PR** if the work is meant for one.
+15. Commit on a non-trunk branch after the yes. Show the user the branch and commits, and push on their yes. Then run **Opening a PR** if the work is meant for one.
 
 When in doubt, delete. A workflow you keep repeating that no skill captures is a candidate for a new skill: propose it in one line.
 

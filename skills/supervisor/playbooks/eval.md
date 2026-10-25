@@ -18,7 +18,7 @@ A candidate that knows it is being watched behaves differently, so the run is bl
 2. Write a rubric of 3 to 6 concrete criteria for the judge only. Never put it where a candidate can read it.
 3. Set up one sanitized workspace per candidate, with the variant installed. Plant the context an organic task would have, such as a project skeleton and the skills the agent would read.
 4. Write one organic prompt, the way a user would type it, to a file only the main chat reads.
-5. Run N candidates, 3 or more, on different models where the harness allows it. Give each its own workspace and the same prompt. Without subagents, run them one after another with `scripts/eval-skill.sh <skill> <agent> --trials N --baseline`, so the variant has something to beat.
+5. Run N candidates, 3 or more, on different models where the harness allows it. Give each its own workspace and the same prompt. Without subagents, run them one after another with `scripts/eval-skill.sh <skill> <agent> --trials N`, then again with `--baseline` so the variant has something to beat.
 6. Run one blind judge on a different model than the candidates, where the harness allows it. Give it the rubric and the outputs by sanitized label. With no second model, state that the judge shares a model with the candidates, because that weakens the verdict.
 7. Verify the chain from transcripts, not self-report. Read each candidate's transcript from this workspace's own transcript folder (see your harness adapter), never other projects'. Note which files each candidate actually opened.
 8. Read every candidate's output end to end yourself. Compare it with the judge's verdict. A disagreement means the judge is biased or the rubric is ambiguous, so say which.

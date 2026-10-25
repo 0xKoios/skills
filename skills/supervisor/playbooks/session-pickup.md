@@ -2,7 +2,7 @@
 
 Resume a prior agent's in-flight work. You own the resume point. Read the prior trail and don't redo it, because a "verify from scratch" pass treats the trail as untrustworthy and repeats finished work.
 
-**Subagents:** A long transcript in step 5 goes to a subagent that returns a reduced timeline, so the main chat doesn't carry the raw log (**principle-guard-the-context-window**). Every other step stays in the main chat. Without a subagent tool, read the transcript in slices yourself.
+**Subagents:** A long transcript in step 7 goes to a subagent that returns a reduced timeline, so the main chat doesn't carry the raw log (**principle-guard-the-context-window**). Every other step stays in the main chat. Without a subagent tool, read the transcript in slices yourself.
 
 1. Locate the spec for the work in `docs/superpowers/specs/`.
 2. Read its status block. A gate line has the exact form `Gate: <questions done|spec approved|plan approved> YYYY-MM-DD`.
