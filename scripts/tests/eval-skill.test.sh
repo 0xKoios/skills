@@ -114,6 +114,34 @@ t_failed_assertion_fails_trial() {
   expect failed_assertion_fails_trial "$ok" "got exit $code"
 }
 
+t_malformed_json_exits_2() {
+  run_eval malformed stub --trials 1
+  local ok=0
+  [ "$code" -eq 2 ] || ok=1
+  contains "evals.json needs a non-empty .evals array" || ok=1
+  expect malformed_json_exits_2 "$ok" "got exit $code"
+}
+
+t_object_evals_exits_2() {
+  run_eval object-evals stub --trials 1
+  local ok=0
+  [ "$code" -eq 2 ] || ok=1
+  contains "evals.json needs a non-empty .evals array" || ok=1
+  expect object_evals_exits_2 "$ok" "got exit $code"
+}
+
+t_missing_jq_exits_2() {
+  local bin; bin=$(mktemp -d)
+  for c in mktemp dirname; do ln -s "$(command -v $c)" "$bin/$c"; done
+  out=$(PATH="$bin" SKILLS_DIR="$F/skills" EVAL_OUT_DIR="$(mktemp -d)" EVAL_STUB_CMD="$F/stub-agent.sh" /bin/bash "$runner" demo stub --case says-ok --trials 1 2>&1)
+  code=$?
+  local ok=0
+  [ "$code" -eq 2 ] || ok=1
+  contains "jq is required" || ok=1
+  expect missing_jq_exits_2 "$ok" "got exit $code"
+}
+
+t_malformed_json_exits_2; t_object_evals_exits_2; t_missing_jq_exits_2
 t_regex_backslash_survives; t_missing_cli_exits_2; t_failed_assertion_fails_trial
 t_case_passes; t_case_fails; t_majority_rule; t_baseline_runs_without; t_prompt_is_passed_verbatim
 t_grader_garbage_fails_trial; t_unknown_agent_exits_2; t_unknown_case_exits_2; t_warns_global_skill_dirs

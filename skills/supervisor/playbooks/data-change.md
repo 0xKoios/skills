@@ -6,7 +6,7 @@ Any change to a pipeline, model, or table, including a wrong-number fix and a ba
 
 1. Classify the change, name its flow in one line, and follow the matching flow.
    - **A new or changed pipeline** follows the Feature flow: run steps 1 to 5 of `feature.md` (questions, spec, data shape, plan, gate check) before step 5 here, and cover steps 2 to 8 in the spec. The gates apply as in **Gates** in the router.
-   - **Wrong numbers** follow the Bug fix flow with no questions: reproduce with the data repro methods below, then debug per `../references/debugging.md`.
+   - **Wrong numbers** follow the Bug fix flow with no questions: run steps 1 to 9 of `bug-fix.md`, reproducing with the data repro methods below and debugging per `../references/debugging.md`. Then continue at step 8 here, then step 9's data verification, then step 10's **Opening a PR**. Step 9 replaces Bug fix's Prove It Works step, because data is proven by its counts and contract.
    - **A behavior-preserving restructure of pipeline code** follows `refactoring.md`, with step 6's run-twice test as part of its behavior pin, because a restructure can break reruns without changing a single run's output.
    - **A backfill-only task** goes straight to step 7.
 2. List the downstream tables, jobs, dashboards, and consumers of what you'll change (`../../principle-look-before-you-write/SKILL.md`).

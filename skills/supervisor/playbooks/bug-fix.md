@@ -1,6 +1,6 @@
 # Bug fix
 
-A reported defect to reproduce, root-cause, and fix. There's no questioning phase, because the repro and the code hold the facts. Start work at once. A bug in a pipeline, model, or table runs from `data-change.md`, which uses this flow with its data repro methods.
+A reported defect to reproduce, root-cause, and fix. There's no questioning phase, because the repro and the code hold the facts. Start work at once. A bug in a pipeline, model, or table starts in `data-change.md`. It runs steps 1 to 9 here with its data repro methods, then its own steps 8 to 10 in place of steps 10 and 11.
 
 Every shipped line traces to evidence. A change that "might help" is a hypothesis, not a fix, so it doesn't ship. Follow `../references/debugging.md` for each step below.
 

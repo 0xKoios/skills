@@ -25,18 +25,18 @@ Try them in this order. Stop at the first that works.
 1. **Find the mistake classes.** Read recent commits, reverts, review comments (a file the user named comes first), the agent instruction files, and comments that explain workarounds. Group the mistakes into classes. A class counts once it has happened twice. Count the occurrences and note where each happened.
 2. **Pick a level per class.** Start at architecture and move down only when the higher level doesn't work here. Write one sentence on why each higher level failed, because that sentence is the check against lazy docs.
 3. **Propose and stop.** Show, per class: the evidence, the level, why a higher level doesn't work, and the real past mistake the check will be proven against. Ask which classes to take, most frequent first. Selecting a class only chooses it for proposal and never authorizes an edit, because the user hasn't seen the diff. Change nothing yet.
-4. **Show the exact diff** for one selected class: every file to add or edit, including the rule-table row in **AGENTS.md**. Say how you'll prove the check fails. Then wait for an explicit yes on that diff. Silence, "hmm", or a new question isn't a yes.
+4. **Show the exact diff** for one selected class: every file to add or edit, including the rule-table row in the work repo's agent-instructions file: **AGENTS.md**, or the one your harness adapter names. Say how you'll prove the check fails. Then wait for an explicit yes on that diff. Silence, "hmm", or a new question isn't a yes.
 5. **Get on a non-trunk branch in the work repo.** If you're on the trunk, run `git switch -c correct/<short-slug>`. Do this before any edit, so the approved change never lands on the trunk.
 6. **Apply it.** Edit the repo, and only what the shown diff contains. If the change needs to grow, return to step 4.
 7. **Prove the check fails on a real past mistake.** Replay the mistake in a separate worktree, so your approved edit stays untouched: run `git worktree add <temp-path> <old-commit>`, or re-create the flagged code there. Run the check in it. It must fail with an error that names the fix. Remove the worktree with `git worktree remove <temp-path>`. Then run the check on the corrected code and see it pass. If it passes on the mistake, go back to step 2, because a check that never failed proves nothing.
 8. **Commit on the branch.** Stage files by path, because the repo may hold the user's other uncommitted work. Make one commit per class, with the check and its rule-table row together.
 9. **Show the branch and commits.** Give the branch name, the branch it started from, and the commit list.
-10. **Don't push on your own.** Ask once whether to push. Push only on an explicit yes, or leave the push to the user.
+10. **Never push.** The user reviews and pushes.
 11. **Repeat from step 4** for the next selected class.
 
 ## The rule table
 
-Keep a table in the work repo's **AGENTS.md** that pairs each rule with what enforces it. Add the row in the same commit as its check.
+Keep a table in the work repo's agent-instructions file (**AGENTS.md**, or the one your harness adapter names) that pairs each rule with what enforces it. Add the row in the same commit as its check.
 
 - When the user corrects you mid-task, fix the mistake and add the rule through `../supervisor/references/corrections.md`, which has the same approval and branch rules.
 - If the rule was already there and nothing enforces it, that's a repeat. Fix it at the highest level that works, in the same change.
@@ -49,7 +49,7 @@ An exception goes on the offending line, with a reason. The rule rejects a bare 
 ## Gates
 
 - No edit to the work repo before the user has seen the exact diff and said yes. Approving a class never counts.
-- Never commit on the trunk. Never push without an explicit yes.
+- Never commit on the trunk. Never push.
 - A check you couldn't prove against a real past mistake isn't committed. Say so and ask.
 
 ## Reply

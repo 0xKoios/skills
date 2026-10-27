@@ -28,10 +28,10 @@ Skip the run when the session is trivial, off-topic, or already handled by a ski
 6. **Check structure.** Move any Accepted row that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog (`../principle-encode-lessons-in-structure/SKILL.md`). Skill prose is for what mechanisms can't enforce.
 7. **Present the lists and stop.** Show Accepted, Rejected and Backlog in full. For each Accepted row show the target skill file, the section, and the intended change. Ask the user which rows to select. The user may drop rows or redirect a routing. Selecting a row only chooses it for proposal and never authorizes an edit, because the user hasn't yet seen the diff. Edit nothing yet.
 8. **Route each selected row by size, before drafting any edit.**
-   - A new skill, a new section, a new table, or more than about 10 lines: hand the row to `../supervisor/playbooks/authoring-a-skill.md` and skip step 9 for it.
+   - A new skill, a new section, a new table, or more than about 10 lines: propose it in one line, then hand the row to `../supervisor/playbooks/authoring-a-skill.md`. It finds the clone, shows the draft, and writes nothing before an explicit yes. Skip step 9 for it.
    - Anything smaller, including a one-line bullet, a corrected fact, or a `tune description` row (add a case whose prompt should trigger the skill): continue to step 9.
-9. **Follow `../supervisor/references/corrections.md` from its step 3 onward for each remaining row.** It finds the clone, then shows the path, the diff and the new eval case, and waits for an explicit yes on that diff. It then applies the edit in the clone, runs `scripts/eval-skill.sh <skill> <agent> --case <id> --trials 3`, handles a FAIL or an exit 2, commits on its branch only as its rules allow, and never pushes. Don't restate or shortcut its rules, because a paraphrase drifts from the source.
-10. **Run `bash scripts/check-skill.sh`** in the clone after the edits. Fix what it reports.
+9. **Follow `../supervisor/references/corrections.md` from its step 3 onward for each remaining row.** It finds the clone, then shows the path, the diff and the new eval case, and waits for an explicit yes on that diff. It then applies the edit in a temporary worktree off the clone, runs `scripts/eval-skill.sh <skill> <agent> --case <id> --trials 3`, handles a FAIL or an exit 2, commits on its branch only as its rules allow, and never pushes. Don't restate or shortcut its rules, because a paraphrase drifts from the source.
+10. **Run `bash scripts/check-skill.sh`** in each edit's worktree before its commit in step 9. Fix what it reports.
 
 ## Gates
 

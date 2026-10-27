@@ -32,22 +32,36 @@ skill_dir_for() {
   esac
 }
 
-# run_agent <agent> <workspace> <prompt-file> <out-file>: run the agent, write its reply to out-file.
+# run_agent <agent> <workspace> <prompt-file> <out-file> [grade]: run the agent, write its reply to out-file.
+# Edits stay in the workspace and git is read-only. With "grade", the agent gets no tools.
 # Returns nonzero on failure (callers record a failure reason).
 run_agent() {
-  local agent="$1" ws="$2" prompt="$3" outf="$4"
+  local agent="$1" ws="$2" prompt="$3" outf="$4" mode="${5:-}"
   case "$agent" in
     stub)
       [ -n "${EVAL_STUB_CMD:-}" ] || { echo "EVAL_STUB_CMD is not set" >&2; return 1; }
       "$EVAL_STUB_CMD" "$ws" "$prompt" > "$outf" ;;
     claude)
-      (cd "$ws" && claude -p "$(cat "$prompt")" --output-format text \
-        --allowedTools "Read" "Glob" "Grep" "Edit" "Write" "Bash(python3 *)" "Bash(git *)") > "$outf" ;;
+      if [ "$mode" = grade ]; then
+        (cd "$ws" && claude -p "$(cat "$prompt")" --output-format text --tools "") > "$outf"
+      else
+        (cd "$ws" && claude -p "$(cat "$prompt")" --output-format text \
+          --allowedTools "Read" "Glob" "Grep" "Edit(./**)" "Bash(python3 *)" \
+          "Bash(git status *)" "Bash(git diff *)" "Bash(git log *)" "Bash(git show *)") > "$outf"
+      fi ;;
     cursor)
-      cursor-agent -p --trust --workspace "$ws" --output-format text "$(cat "$prompt")" > "$outf" ;;
+      if [ "$mode" = grade ]; then
+        cursor-agent -p --trust --mode ask --workspace "$ws" --output-format text "$(cat "$prompt")" > "$outf"
+      else
+        cursor-agent -p --trust --workspace "$ws" --output-format text "$(cat "$prompt")" > "$outf"
+      fi ;;
     copilot)
-      (cd "$ws" && copilot -p "$(cat "$prompt")" -s --no-ask-user \
-        --allow-tool='write, shell(python3:*), shell(git:*)') > "$outf" ;;
+      if [ "$mode" = grade ]; then
+        (cd "$ws" && copilot -p "$(cat "$prompt")" -s --no-ask-user) > "$outf"
+      else
+        (cd "$ws" && copilot -p "$(cat "$prompt")" -s --no-ask-user \
+          --allow-tool='write, shell(python3:*), shell(git status), shell(git diff), shell(git log), shell(git show)') > "$outf"
+      fi ;;
     *) echo "agent $agent not implemented yet" >&2; return 1 ;;
   esac
 }
@@ -70,6 +84,7 @@ grader="${grader:-$agent}"
 for a in "$agent" "$grader"; do
   case "$a" in claude|cursor|copilot|stub) ;; *) echo "unknown agent: $a" >&2; exit 2 ;; esac
 done
+command -v jq >/dev/null 2>&1 || { echo "jq is required" >&2; exit 2; }
 for a in "$agent" "$grader"; do
   cli=$(cli_for "$a")
   [ -z "$cli" ] || command -v "$cli" >/dev/null 2>&1 || { echo "$cli not installed" >&2; exit 2; }
@@ -78,6 +93,8 @@ done
 skill_path="$SKILLS_DIR/$skill"
 evals_json="$skill_path/evals/evals.json"
 [ -f "$evals_json" ] || { echo "no evals.json for $skill: $evals_json" >&2; exit 2; }
+jq -e '.evals | type == "array" and length > 0' "$evals_json" >/dev/null 2>&1 || {
+  echo "evals.json needs a non-empty .evals array: $evals_json" >&2; exit 2; }
 if [ -n "$only_case" ] && ! jq -e --arg id "$only_case" '.evals[] | select(.id == $id)' "$evals_json" >/dev/null; then
   echo "no case: $only_case" >&2; exit 2
 fi
@@ -112,7 +129,7 @@ grade() {
   tail="${prompt#*'{{ASSERTIONS}}'}"
   printf '%s' "$head$list$tail" > "$gprompt"
   rm -rf "$gws"; mkdir -p "$gws"
-  run_agent "$grader" "$gws" "$gprompt" "$gouts" </dev/null || { echo "grader run failed"; return; }
+  run_agent "$grader" "$gws" "$gprompt" "$gouts" grade </dev/null || { echo "grader run failed"; return; }
   gout=$(<"$gouts")
   json="${gout#*\{}"
   if [ "$json" = "$gout" ]; then echo "grader output unparsable"; return; fi

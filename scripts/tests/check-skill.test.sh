@@ -56,6 +56,22 @@ t_repo() {
   expect t_repo "$code" "expected exit 0, got $code"
 }
 
-t_good; t_bad_flag; t_bad_evals; t_repo
+t_bad_json() {
+  run_check "$F/bad-json/skills"
+  local ok=0
+  [ "$code" -eq 1 ] || ok=1
+  contains "evals.json: invalid JSON" || ok=1
+  expect t_bad_json "$ok" "expected exit 1 and invalid JSON message, got $code"
+}
+
+t_bad_shape() {
+  run_check "$F/bad-shape/skills"
+  local ok=0
+  [ "$code" -eq 1 ] || ok=1
+  contains "evals.json: .evals must be a non-empty array" || ok=1
+  expect t_bad_shape "$ok" "expected exit 1 and array message, got $code"
+}
+
+t_good; t_bad_flag; t_bad_evals; t_bad_json; t_bad_shape; t_repo
 echo "$passed passed, $failed failed"
 [ "$failed" -eq 0 ]

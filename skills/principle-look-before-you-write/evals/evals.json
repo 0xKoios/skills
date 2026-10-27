@@ -9,7 +9,7 @@
         { "type": "output_not_matches", "pattern": "[Uu]pdated [0-9]+ rows" }
       ],
       "assertions": [
-        "Lists who depends on customers.tier.",
+        "Lists dependents it has read, or gives the search that finds them.",
         "Shows a preview (a COUNT query, dry run, or diff of affected rows) before writing, without inventing a result.",
         "States the backfill range and cost and waits for a yes."
       ]

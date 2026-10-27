@@ -29,17 +29,17 @@ for skill_md in "$SKILLS_DIR"/*/SKILL.md; do
       ;;
   esac
 
-  # evals/evals.json (optional): schema documented in the supervisor plan
+  # evals/evals.json (optional): schema in skills/supervisor/references/eval-cases.md
   evals="$dir/evals/evals.json"
   if [ -f "$evals" ]; then
     if ! command -v jq >/dev/null 2>&1; then
       fail "$evals: jq is required to check evals.json"
     elif ! jq -e . "$evals" >/dev/null 2>&1; then
       fail "$evals: invalid JSON"
+    elif ! jq -e '.evals | type == "array" and length > 0' "$evals" >/dev/null 2>&1; then
+      fail "$evals: .evals must be a non-empty array"
     else
-      while IFS= read -r msg; do
-        fail "$evals: $msg"
-      done < <(jq -r --arg skill "$dir_name" '
+      if ! msgs=$(jq -r --arg skill "$dir_name" '
         (if .skill_name == $skill then empty else "skill_name '"'"'\(.skill_name)'"'"' must be '"'"'\($skill)'"'"'" end),
         ((.evals // []) | group_by(.id)[] | select(length > 1) | "duplicate id '"'"'\(.[0].id)'"'"'"),
         ((.evals // [])[] | .id as $id
@@ -47,11 +47,22 @@ for skill_md in "$SKILLS_DIR"/*/SKILL.md; do
              then "eval '"'"'\(.id)'"'"' needs checks or assertions" else empty end),
             ((.checks // [])[] | select(.type != "output_matches" and .type != "output_not_matches")
              | "eval '"'"'\($id)'"'"' check type '"'"'\(.type)'"'"' unknown"))
-      ' "$evals")
+      ' "$evals" 2>&1); then
+        fail "$evals: jq error: ${msgs##*$'\n'}"
+      else
+        while IFS= read -r msg; do
+          [ -n "$msg" ] && fail "$evals: $msg"
+        done <<< "$msgs"
+      fi
       # Files are listed per eval; check each exists relative to the skill dir
-      while IFS=$'\t' read -r id f; do
-        [ -e "$dir/$f" ] || fail "$evals: eval '$id' file $f not found"
-      done < <(jq -r '(.evals // [])[] | .id as $id | (.files // [])[] | [$id, .] | @tsv' "$evals")
+      if ! rows=$(jq -r '(.evals // [])[] | .id as $id | (.files // [])[] | [$id, .] | @tsv' "$evals" 2>&1); then
+        fail "$evals: jq error: ${rows##*$'\n'}"
+      else
+        while IFS=$'\t' read -r id f; do
+          [ -n "$id$f" ] || continue
+          [ -e "$dir/$f" ] || fail "$evals: eval '$id' file $f not found"
+        done <<< "$rows"
+      fi
     fi
   fi
 
