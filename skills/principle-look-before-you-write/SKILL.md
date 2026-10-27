@@ -15,7 +15,7 @@ Before an irreversible change, or one that other people or systems depend on, lo
 - **Preview the effect.** Show a count of affected rows (the same WHERE clause wrapped in SELECT COUNT), a dry run, or a diff. Include a few sample rows or before-and-after values.
 - **Make backfills explicit.** State the exact range (for example 2023-07-01 to 2023-09-30), how many rows or partitions that covers, and the cost in time, compute, or load on production.
 - **Say how to undo it.** Name the rollback: a backup or snapshot of the affected rows, or the inverse statement.
-- **Without access, give the commands.** If you can't reach the code or the database, give the search that finds dependents, the preview query, and the backfill range as commands to run. Name no dependent you haven't read, because a guessed dependent reads as a checked one.
+- **Without access, give the commands.** If you can't reach the code or the database, give the search that finds dependents, the preview query, and the backfill range as commands to run, plus an estimate of the backfill's cost and what it rests on. Name no dependent you haven't read, because a guessed dependent reads as a checked one.
 - **Wait for a yes.** End with the preview and the plan, and run nothing that writes until the user approves. Reads and dry runs are fine before that.
 
 **Not this:**
