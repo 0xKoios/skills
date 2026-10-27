@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-separate-before-serializing-shared-state",
+  "evals": [
+    {
+      "id": "split-target",
+      "prompt": "/principle-separate-before-serializing-shared-state two workers append to the same results.json, add a lock",
+      "expected_output": "Each worker writes its own output and a merge step combines them; a lock only if one writer is a real invariant.",
+      "assertions": [
+        "Proposes giving each worker its own output and merging after, before considering a lock."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-sequence-verifiable-units",
+  "evals": [
+    {
+      "id": "small-checked-steps",
+      "prompt": "/principle-sequence-verifiable-units migrate 30 endpoints to the new auth middleware",
+      "expected_output": "Small units, each ending in a check that passes before the next starts.",
+      "assertions": [
+        "Breaks the work into small units that each end in a check, verified before the next."
+      ]
+    }
+  ]
+}

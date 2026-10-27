@@ -1,0 +1,11 @@
+{
+  "skill_name": "principle-attack-the-premise",
+  "evals": [
+    {
+      "id": "names-premise",
+      "prompt": "/principle-attack-the-premise two fixes assuming the cache is stale both failed; try a third cache fix",
+      "expected_output": "The stale-cache premise is written down and tested directly before any third fix.",
+      "assertions": ["Writes the shared premise down and proposes a direct test of it before any third fix."]
+    }
+  ]
+}

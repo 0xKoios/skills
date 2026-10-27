@@ -1,0 +1,16 @@
+{
+  "skill_name": "principle-test-behavior-not-implementation",
+  "evals": [
+    {
+      "id": "observable-assert",
+      "prompt": "/principle-test-behavior-not-implementation write a test for cart.total()",
+      "expected_output": "Tests call add() and total() and assert the returned totals, with no mocks of _subtotal or _discount.",
+      "files": [
+        "evals/files/cart.py"
+      ],
+      "assertions": [
+        "Asserts on the returned total through the public interface, with no mocking of internals."
+      ]
+    }
+  ]
+}

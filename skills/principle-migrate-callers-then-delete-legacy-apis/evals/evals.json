@@ -1,0 +1,18 @@
+{
+  "skill_name": "principle-migrate-callers-then-delete-legacy-apis",
+  "evals": [
+    {
+      "id": "one-wave",
+      "prompt": "/principle-migrate-callers-then-delete-legacy-apis add a new send_email_v2 that accepts a list of recipients, and keep send_email around",
+      "expected_output": "Every internal caller moves to the new API and send_email is deleted in the same change.",
+      "files": [
+        "evals/files/mailer.py",
+        "evals/files/signup.py",
+        "evals/files/billing.py"
+      ],
+      "assertions": [
+        "Migrates all internal callers and deletes send_email in the same change."
+      ]
+    }
+  ]
+}

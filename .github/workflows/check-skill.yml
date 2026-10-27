@@ -11,3 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check skill structure
         run: bash scripts/check-skill.sh
+      - name: Test skill checker
+        run: bash scripts/tests/check-skill.test.sh
+      - name: Test eval runner
+        run: bash scripts/tests/eval-skill.test.sh

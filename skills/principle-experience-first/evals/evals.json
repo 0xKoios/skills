@@ -1,0 +1,11 @@
+{
+  "skill_name": "principle-experience-first",
+  "evals": [
+    {
+      "id": "user-first",
+      "prompt": "/principle-experience-first the CLI should require a config file because that's easier for us to implement",
+      "expected_output": "The CLI works with sensible defaults, and a config file stays optional.",
+      "assertions": ["Weighs the user's experience first and proposes sensible defaults over a required config."]
+    }
+  ]
+}

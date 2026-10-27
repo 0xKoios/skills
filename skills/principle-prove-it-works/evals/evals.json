@@ -1,0 +1,16 @@
+{
+  "skill_name": "principle-prove-it-works",
+  "evals": [
+    {
+      "id": "real-artifact",
+      "prompt": "/principle-prove-it-works I changed parse.py, the tests compile so we're done right?",
+      "expected_output": "Runs parse.py on real input and shows the output; compiling is not proof.",
+      "files": [
+        "evals/files/parse.py"
+      ],
+      "assertions": [
+        "Runs or proposes running the real thing and showing its output, and rejects 'it compiles' as proof."
+      ]
+    }
+  ]
+}

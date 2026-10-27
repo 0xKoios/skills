@@ -1,0 +1,16 @@
+{
+  "skill_name": "principle-fix-root-causes",
+  "evals": [
+    {
+      "id": "trace-back",
+      "prompt": "/principle-fix-root-causes the report shows null totals, just coalesce them to 0",
+      "expected_output": "Traces the nulls to where they first appear before any coalesce.",
+      "files": [
+        "evals/files/report.py"
+      ],
+      "assertions": [
+        "Traces where the nulls first appear instead of masking them."
+      ]
+    }
+  ]
+}

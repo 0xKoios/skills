@@ -1,0 +1,15 @@
+{
+  "skill_name": "wrong",
+  "evals": [
+    { "id": "a", "prompt": "p", "expected_output": "e", "assertions": ["x"] },
+    { "id": "a", "prompt": "p", "expected_output": "e", "assertions": ["x"] },
+    { "id": "b", "prompt": "p", "expected_output": "e" },
+    {
+      "id": "c",
+      "prompt": "p",
+      "expected_output": "e",
+      "checks": [{ "type": "nope", "pattern": "x" }],
+      "files": ["evals/files/missing.txt"]
+    }
+  ]
+}

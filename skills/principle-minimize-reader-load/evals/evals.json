@@ -1,0 +1,12 @@
+{
+  "skill_name": "principle-minimize-reader-load",
+  "evals": [
+    {
+      "id": "collapse-wrapper",
+      "prompt": "/principle-minimize-reader-load review service.py",
+      "expected_output": "The adapter and helper functions with one caller are flagged for inlining.",
+      "files": ["evals/files/service.py"],
+      "assertions": ["Identifies the one-caller wrappers and proposes inlining them."]
+    }
+  ]
+}

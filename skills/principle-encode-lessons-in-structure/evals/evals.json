@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-encode-lessons-in-structure",
+  "evals": [
+    {
+      "id": "lint-not-doc",
+      "prompt": "/principle-encode-lessons-in-structure I keep telling agents not to use print() in library code",
+      "expected_output": "A lint rule or check that bans print() in library code, with an error naming the fix.",
+      "assertions": [
+        "Proposes a lint rule or check whose error names the fix, before more instructions."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "skill_name": "principle-exhaust-the-design-space",
+  "evals": [
+    {
+      "id": "two-sketches",
+      "prompt": "/principle-exhaust-the-design-space design a brand-new sync protocol between two services",
+      "expected_output": "Two or three competing protocol sketches, with criteria for comparing them before choosing.",
+      "assertions": ["Proposes 2 or 3 competing sketches and how to compare them before committing."]
+    }
+  ]
+}

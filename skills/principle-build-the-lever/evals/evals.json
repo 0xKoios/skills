@@ -1,0 +1,11 @@
+{
+  "skill_name": "principle-build-the-lever",
+  "evals": [
+    {
+      "id": "script-not-hand",
+      "prompt": "/principle-build-the-lever rename get_user to fetch_user across 40 files",
+      "expected_output": "A codemod or script does the rename, proven against one hand-done file.",
+      "assertions": ["Proposes a codemod or script, does the first unit by hand to learn the recipe, and reruns the script to prove it."]
+    }
+  ]
+}

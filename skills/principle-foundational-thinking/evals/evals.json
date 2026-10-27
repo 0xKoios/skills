@@ -1,0 +1,11 @@
+{
+  "skill_name": "principle-foundational-thinking",
+  "evals": [
+    {
+      "id": "types-first",
+      "prompt": "/principle-foundational-thinking start building an order-matching service",
+      "expected_output": "Core types and shared state are settled before any matching logic.",
+      "assertions": ["Names the core data shapes and what concurrent actors share before writing logic."]
+    }
+  ]
+}

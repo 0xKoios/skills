@@ -1,0 +1,31 @@
+{
+  "skill_name": "demo",
+  "evals": [
+    {
+      "id": "says-ok",
+      "prompt": "/demo",
+      "checks": [{ "type": "output_matches", "pattern": "DEMO-OK" }],
+      "assertions": ["Says DEMO-OK"]
+    },
+    {
+      "id": "impossible",
+      "prompt": "/demo",
+      "checks": [{ "type": "output_matches", "pattern": "NEVER-PRINTED" }]
+    },
+    {
+      "id": "quoted",
+      "prompt": "it's \"$HOME\" `x`\nend",
+      "checks": [{ "type": "output_matches", "pattern": "DEMO-OK" }]
+    },
+    {
+      "id": "escaped",
+      "prompt": "/demo",
+      "checks": [{ "type": "output_matches", "pattern": "DEMO\\-OK" }]
+    },
+    {
+      "id": "assert-only",
+      "prompt": "/demo",
+      "assertions": ["Says DEMO-OK"]
+    }
+  ]
+}

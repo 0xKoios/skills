@@ -1,0 +1,12 @@
+{
+  "skill_name": "principle-redesign-from-first-principles",
+  "evals": [
+    {
+      "id": "fold-in-requirement",
+      "prompt": "/principle-redesign-from-first-principles we now need multi-currency in pricing.py, just add an if for EUR",
+      "expected_output": "Currency becomes part of the core money model instead of an EUR branch.",
+      "files": ["evals/files/pricing.py"],
+      "assertions": ["Proposes a design where currency is part of the core model instead of a special-case branch."]
+    }
+  ]
+}

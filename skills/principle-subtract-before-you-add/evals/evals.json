@@ -1,0 +1,12 @@
+{
+  "skill_name": "principle-subtract-before-you-add",
+  "evals": [
+    {
+      "id": "delete-first",
+      "prompt": "/principle-subtract-before-you-add add a CSV exporter to report.py",
+      "expected_output": "Dead code in report.py is removed first, then the CSV exporter is added.",
+      "files": ["evals/files/report.py"],
+      "assertions": ["Proposes removing the dead code before adding the exporter."]
+    }
+  ]
+}

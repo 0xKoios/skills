@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-never-block-on-the-human",
+  "evals": [
+    {
+      "id": "proceed-reversible",
+      "prompt": "/principle-never-block-on-the-human should I rename this local variable from x to count?",
+      "expected_output": "Do the rename (or recommend it outright); irreversible actions still need a yes.",
+      "assertions": [
+        "Just does or recommends the reversible change instead of asking permission."
+      ]
+    }
+  ]
+}

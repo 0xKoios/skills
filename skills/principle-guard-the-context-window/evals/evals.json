@@ -1,0 +1,13 @@
+{
+  "skill_name": "principle-guard-the-context-window",
+  "evals": [
+    {
+      "id": "delegate-bulk",
+      "prompt": "/principle-guard-the-context-window read all 200 log files in logs/ and tell me what failed",
+      "expected_output": "A subagent or script reads the logs and only a summary of failures comes back.",
+      "assertions": [
+        "Proposes routing the bulk reading to a subagent or script and keeping only a summary in the main thread."
+      ]
+    }
+  ]
+}
