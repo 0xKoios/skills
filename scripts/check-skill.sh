@@ -34,29 +34,6 @@ for dir in skills/*/; do
   ls "$dir" | grep -qx 'SKILL.md' || fail "${dir}: missing SKILL.md (exact name, uppercase)"
 done
 
-# ado-boards: split az recipes (cheaper context); no monolithic commands.md
-ado=skills/ado-boards
-for f in README.md setup.md my-cards.md create.md comments.md plan-my-sprint.md write-description.md windows.md; do
-  [ -f "$ado/az/$f" ] || fail "$ado/az/$f: missing (az recipe split)"
-done
-[ ! -e "$ado/commands.md" ] || fail "$ado/commands.md: must not exist after az/ split"
-if [ -f "$ado/az/my-cards.md" ]; then
-  grep -q 'commentId' "$ado/az/my-cards.md" && fail "$ado/az/my-cards.md: must not contain commentId (belongs in az/comments.md)"
-  grep -q '@desc.html' "$ado/az/my-cards.md" && fail "$ado/az/my-cards.md: must not contain @desc.html (belongs in az/windows.md)"
-fi
-for wf in "$ado"/workflows/*.md; do
-  head -n 5 "$wf" | grep -q '`\.\./az/' || fail "$wf: first paragraph must reference \`../az/\` for az backend"
-done
-# SKILL.md must not load az/windows.md on every Windows az turn (only HTML/quoting failures)
-while IFS= read -r line; do
-  case "$line" in
-    *az/windows.md*)
-      printf '%s' "$line" | grep -Eqi 'only when' || \
-        fail "$ado/SKILL.md: az/windows.md mention must say \"only when\" (scoped), not every Windows turn"
-      ;;
-  esac
-done < "$ado/SKILL.md"
-
 if [ "$errors" -gt 0 ]; then
   echo "$errors error(s)"
   exit 1

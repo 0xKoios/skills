@@ -9,7 +9,6 @@ Works with Cursor, Claude Code, Copilot, Codex, Gemini CLI, and other [Agent Ski
 Needs [Node.js](https://nodejs.org/) 22.20+.
 
 ```bash
-npx skills add 0xKoios/skills -s ado-boards -g
 npx skills add 0xKoios/skills -s brag-docs -g
 ```
 
@@ -19,8 +18,7 @@ Done when the agent lists the skill you installed. `-g` makes it available in ev
 
 | Skill | Reach for it when |
 |---|---|
-| [`ado-boards`](skills/ado-boards/) | Your Azure Boards cards — view, create under a parent, move, log time, comments, description/AC, plan my sprint. Reads free; every write previews first. |
-| [`brag-docs`](skills/brag-docs/) | Living brag document — `brag-setup`, `brag-capture`, `brag-backfill`. Markdown default; action → result → evidence; optional scan on backfill; preview before write. |
+| [`brag-docs`](skills/brag-docs/) | Living brag document from what you type — `brag-setup`, `brag-capture`, `brag-backfill`, `brag-review`. Rewrites rough notes into action → result → evidence; generalizes entries for a personal store; preview before write. |
 
 ## Edit a skill
 
@@ -28,7 +26,6 @@ Done when the agent lists the skill you installed. `-g` makes it available in ev
 
 ```bash
 git clone https://github.com/0xKoios/skills ~/code/skills
-ln -s ~/code/skills/skills/ado-boards ~/.claude/skills/ado-boards
 ln -s ~/code/skills/skills/brag-docs ~/.claude/skills/brag-docs
 ```
 

@@ -1,15 +1,16 @@
 ---
 name: brag-docs
 description: >-
-  Brag document. Use when the user wants to set up brag docs, capture a win
-  into their brag document, or backfill a time range of accomplishments.
-  Optional scan on backfill; markdown, Notion, or chat-only store.
+  Brag document. Use when the user finishes work and wants to note it, rewrite
+  what they did into an impact entry, backfill accomplishments for a time
+  range, or prep a performance review, self-review or promo packet from their
+  brag doc.
 license: MIT
 ---
 
 # Brag docs
 
-Help one person maintain a **Brag document** — a durable, evidence-backed record of accomplishments. **Store** and **Scan** preferences live in **config**; the same skill fits markdown, Notion, or chat-only.
+Help one person maintain a **Brag document** — a durable record of accomplishments, written from what the user types. **Store** preferences live in **config**; the same skill fits markdown, Notion, or chat-only.
 
 ## 1. Before anything else
 
@@ -24,21 +25,24 @@ User config stays on their machine. Credentials and tokens stay out of chat and 
 
 | Rule | Criterion |
 |---|---|
-| **Entry** | Draft **Entries** (see `GLOSSARY.md` and `references/evidence-and-categories.md`). Use user- or scan-sourced numbers and links; otherwise `(evidence needed)`. |
+| **Typed input** | Every fact comes from what the user types in this chat or from their own **Store**. Ask the user; tickets, boards and repos stay unread. |
+| **Entry** | Draft **Entries** per `references/evidence-and-categories.md` (terms: `GLOSSARY.md`). |
+| **Personal store** | **Store owner** `personal` → generalize every draft per `references/personal-store.md` before preview. |
 | **Append-only** | Append to the configured **Store**; edit existing lines only when the user asks. |
 | **Preview** | Before any write: show drafts with evidence gaps; wait for explicit **yes**. Anything other than yes leaves the store unchanged. |
-| **Scan** | **Scan** is for **brag-backfill** only when tools exist and config/user allow it. Confirm time range and sources before scanning. |
 | **Write footer** | After a write: what was appended, where, one next step. Chat-only: paste instructions only. |
 
 ## 3. Workflows
 
 | When | Open |
 |---|---|
-| Set up brag docs; config missing; store or scan preferences changed | `workflows/brag-setup.md` |
-| Capture a win; turn notes into **Entries** | `workflows/brag-capture.md` |
-| Backfill a time range; optional scan then interview | `workflows/brag-backfill.md` |
+| Set up brag docs; config missing; store preferences changed | `workflows/brag-setup.md` |
+| Just finished something; turn a rough note into **Entries** | `workflows/brag-capture.md` |
+| Backfill a time range from memory | `workflows/brag-backfill.md` |
+| Prep a performance review, self-review or promo packet | `workflows/brag-review.md` |
 
 ## 4. Reference
 
 - Domain terms: `GLOSSARY.md`
 - When drafting **Entries**: `references/evidence-and-categories.md`
+- When **Store owner** is `personal`: `references/personal-store.md`

@@ -1,37 +1,33 @@
 # Workflow: brag-backfill
 
-Goal: reconstruct **Entries** for a time range, then persist with **brag-capture**’s Preview and write gate. Optional **Scan** when config and user allow and tools exist; otherwise finish via interview. How: read config; draft with `../references/evidence-and-categories.md`.
+Goal: reconstruct **Entries** for a past time range from the user's memory, then persist with **brag-capture**’s Preview and write gate. How: read config (`../SKILL.md` §1); draft with `../references/evidence-and-categories.md`.
 
 ## Before work
 
 1. Read config. Missing → **`brag-setup`** first.
-2. **Time range** — confirm explicitly (e.g. “last week”, “March 2026”, “Q3”). Do not scan until the range is agreed.
+2. **Time range** — confirm explicitly (e.g. "last week", "March 2026", "Q3"). Do not interview until the range is agreed.
 3. **Store** and target — same as capture; collect on first need (user may **skip** — field stays `not set yet`).
 
-## Scan (optional)
+## Interview
 
-Respect **Scan default** from config:
+Walk the range in chunks the user can recall (week by week for a month, month by month for a quarter or longer). For each chunk, prompt with the categories in the evidence reference:
 
-| Scan default | Behavior |
-|---|---|
-| `off` | Skip scan; go to interview. |
-| `ask each time` | Offer scan; proceed only if user agrees for this run. |
-| `on when tools exist` | Try available tools; user may still decline. |
+- What shipped?
+- What broke that you fixed?
+- Who did you unblock, review for, or mentor?
+- What did you build or document that others use?
 
-Before scanning: confirm **which sources** to try (local git log, `gh pr list`, board queries, etc.) for the agreed range. If a tool is missing or auth fails, say so and continue without it.
-
-**Scan output is draft input only** — group related commits/PRs/cards into one **Entry** where it tells one story; preserve user voice. Dates, links, and numbers come from scan output or stay `(evidence needed)`.
-
-If scan is skipped, unavailable, or thin → **interview** for the same range (“What shipped? What broke and you fixed? Who did you unblock?”). Backfill without scan must still complete via interview. Prefer an honest gap over fluff — zero **Entries** after scan and interview is a valid **done** (say so).
+The user may paste old notes, chat snippets or ticket titles; treat them as typed input. Stop a chunk when the user has nothing more. Prefer an honest gap over fluff — zero **Entries** for the range is a valid **done** (say so).
 
 ## Draft and categorize
 
-1. Merge scan signals and interview answers into candidate accomplishments.
-2. Assign a primary **category** when helpful (`shipped`, `bugfix`, `collaboration`, `infra`, `docs`, `other`) — mainly for grouping in preview.
-3. Draft each as an **Entry** per `../references/evidence-and-categories.md`.
+1. Merge related answers into one accomplishment where they tell one story.
+2. Rewrite each per **Rewrite a rough note** in the evidence reference — evidence asked once, gaps marked.
+3. Assign a primary **category** when helpful — mainly for grouping in preview.
+4. **Store owner** `personal` → generalize per `../references/personal-store.md`.
 
 ## Preview and write
 
-Follow **Preview and write** in `brag-capture.md` (same persist gate). Then write footer with count/range covered and suggest **`brag-capture`** for the next single win.
+Follow **Preview and write** in `brag-capture.md` (same persist gate). Then write footer with count/range covered and suggest **`brag-capture`** right after the next finished piece of work.
 
 Done when that gate completes for the agreed range (including declined preview or zero entries).

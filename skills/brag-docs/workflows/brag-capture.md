@@ -1,8 +1,6 @@
 # Workflow: brag-capture
 
-Goal: turn fresh notes or a short interview into one or more **Entries** and persist them to the configured **Store** (or paste when chat-only). How: read `~/.config/brag-docs/config.md`; shape drafts with `../references/evidence-and-categories.md`.
-
-**Scan** is not used here — only user notes and interview.
+Goal: turn a rough note the user just typed into one or more **Entries** and persist them to the configured **Store** (or paste when chat-only). How: read config (`../SKILL.md` §1); shape drafts with `../references/evidence-and-categories.md`.
 
 ## Before intake
 
@@ -11,32 +9,28 @@ Goal: turn fresh notes or a short interview into one or more **Entries** and per
 
 ## Intake
 
-Accept whatever the user brought: bullets, paste, “I shipped X today”, or silence.
+Accept whatever the user typed: one line, bullets, a pasted ticket title, "I finished X today". Split it into separate accomplishments.
 
-If detail is thin, run a **short interview** (stop when you can draft **Entries**):
+## Rewrite
 
-- What did you do? (**action**)
-- Who benefited or what changed? (**result**)
-- What proof exists? (**evidence**)
+For each accomplishment, rewrite the note per **Rewrite a rough note** in the evidence reference. When result or evidence is missing, ask **one** combined question per accomplishment, offering the evidence the user almost always has:
 
-Optional: ask for a **category** (`shipped`, `bugfix`, `collaboration`, `infra`, `docs`, `other`); skip if the user does not care.
+> What changed because of this — and do you have a ticket ID, a date, or who asked for it?
 
-## Draft
+Whatever the answer — including "nothing" — draft the **Entry** and mark remaining gaps `(evidence needed)`. Optional: tag a **category**; skip if the user does not care.
 
-For each accomplishment, draft **Entries** per the evidence reference. Call out ladder gaps in the preview (activity-only → ask once more or mark `(evidence needed)`).
-
-Use the one-liner shape from the reference when helpful; bullets or headings are fine for markdown **Store** files.
+Check each draft against **Anti-patterns** in the evidence reference. **Store owner** `personal` → generalize per `../references/personal-store.md`.
 
 ## Preview and write
 
-This section is the **persist gate** for capture and for **brag-backfill** (which points here).
+This section is the **persist gate** for capture and for **brag-backfill** (which points here). Rules **Preview**, **Append-only**, and **Write footer** in `../SKILL.md` §2 bind this gate.
 
-1. Show all draft **Entries** with gaps labeled. Wait for explicit **yes**. Anything other than yes → **done**; store unchanged.
+1. Show all draft **Entries** with gaps labeled (and generalizations listed, for a personal store). Wait for explicit **yes** (§2 **Preview**).
 2. On **yes**:
    - If **Store** is **markdown** and **Store path** is still `not set yet`, or **Store** is **notion** and **Notion target** is still `not set yet` (including after skip): show pasteable markdown and **stop**; do not create a file, write Notion, or substitute a path such as `~/brag-docs/YYYY.md`.
    - **markdown** — append-only to **Store path** (create parent dirs if needed; edit existing lines only when the user asked).
    - **notion** — append when Notion tools/auth exist; otherwise show pasteable markdown and say sign-in or fix target.
    - **chat-only** — show pasteable markdown and **stop**.
-3. **Write footer** — what was appended (or pasted), where, one next step (e.g. another capture). Chat-only: paste instructions only.
+3. Apply §2 **Write footer**.
 
 Done when the user has approved drafts and persistence (or paste) matches config — or when they declined preview.
